@@ -1,0 +1,1 @@
+![](assets/mardown/file-20251205151814621.docx)

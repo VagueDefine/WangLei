@@ -1,0 +1,48 @@
+{
+  "appId": "buQSAsR12Di2wE3c9cQB/g2W8umWI6FuTV2Wi5mP1jUOGYdmCyLJDWjWUOxpnAXf",
+  "appSecret": "xuGhRDoLQBNsSQIalIsYgMtnNqvGxPFwl49ap8EfrjvcR+oS/KoMW3MeXIn7TI2NP6ekmbgx+CgNzk75",
+  "folderToken": "sAYtkOEFqViWKoDMRIJa4gb54JeGv7vrZ22IiGHpF04SZfWKlIja26LcUsvWyvu0aFRTKRxV/g==",
+  "userId": "8V34PO7KOLdxnRj8nhypflpnD43l9+cGsR7LcwYtypnr0VXA",
+  "uploadHistory": [
+    {
+      "title": "一、单转差分电路",
+      "url": "https://qcn795l0ecyx.feishu.cn/docx/F12OdgHH8oh1aCxmBdRcCbwonif",
+      "uploadTime": "2026-01-29 20:43",
+      "docToken": "F12OdgHH8oh1aCxmBdRcCbwonif",
+      "permissions": {
+        "isPublic": false,
+        "allowCopy": false,
+        "allowCreateCopy": false
+      }
+    },
+    {
+      "title": "未命名 3",
+      "url": "https://qcn795l0ecyx.feishu.cn/docx/EKQedhIGboi797x2zJbctCkhnwh",
+      "uploadTime": "2026-01-28 22:44",
+      "docToken": "EKQedhIGboi797x2zJbctCkhnwh",
+      "permissions": {
+        "isPublic": true,
+        "allowCopy": false,
+        "allowCreateCopy": false
+      }
+    },
+    {
+      "title": "未命名 1",
+      "url": "https://qcn795l0ecyx.feishu.cn/docx/H08cdy8Snoc8bwxfWMwcb0o6nDd",
+      "uploadTime": "2026-01-28 10:50",
+      "docToken": "H08cdy8Snoc8bwxfWMwcb0o6nDd",
+      "permissions": {
+        "isPublic": true,
+        "allowCopy": false,
+        "allowCreateCopy": false
+      }
+    }
+  ],
+  "uploadCount": 3,
+  "agreedToTerms": true,
+  "apiCallCount": 38,
+  "lastResetDate": "2026-01",
+  "enableDoubleLinkMode": true,
+  "enableSmartUpdate": false,
+  "debugLoggingEnabled": true
+}

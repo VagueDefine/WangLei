@@ -1,0 +1,15 @@
+/* ============= 图片居中 ============= */
+
+/* 全局自动居中所有图片 */
+img {
+  display: block !important;
+  margin: 0.8em auto !important;
+}
+
+/* 对内嵌图片容器也居中 */
+.image-embed {
+  display: flex !important;
+  justify-content: center !important;
+  margin: 1em 0 !important;
+}
+

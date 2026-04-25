@@ -1,18 +1,25 @@
-# Quartz 部署到 GitHub Pages 完整指南
+---
+title: Quartz 部署到 GitHub Pages 完整指南
+tags:
+  - Quartz
+  - 博客
+  - 部署
+  - GitHub
+---
 
-> 本文档是 Quartz 4 部署的完整指南，包含安装、配置、主题切换、部署流程以及常见问题的解决方案。
+> 📖 本文档是 Quartz 4 部署的完整指南，包含安装、配置、主题切换、部署流程以及常见问题的解决方案。
 > 适用于 Windows 环境，Quartz 版本 4.5.2+。
 
 ---
 
 ## 目录
 
-1. [第一章：环境准备与安装](#第一章环境准备与安装)
-2. [第二章：本地配置与使用](#第二章本地配置与使用)
-3. [第三章：主题自定义](#第三章主题自定义)
-4. [第四章：部署到 GitHub Pages](#第四章部署到-github-pages)
-5. [第五章：问题排查与解决](#第五章问题排查与解决)
-6. [第六章：日常维护](#第六章日常维护)
+1. [环境准备与安装](#第一章环境准备与安装)
+2. [本地配置与使用](#第二章本地配置与使用)
+3. [主题自定义](#第三章主题自定义)
+4. [部署到 GitHub Pages](#第四章部署到-github-pages)
+5. [问题排查与解决](#第五章问题排查与解决)
+6. [日常维护](#第六章日常维护)
 7. [附录](#附录)
 
 ---
@@ -130,7 +137,7 @@ const config: QuartzConfig = {
       Plugin.FrontMatter(),
       Plugin.CreatedModifiedDate({}),
       Plugin.SyntaxHighlighting({}),
-      Plugin.ObsidianFlavoredMarkdown({}),
+      Plugin.ObsidianFlavoredMarkdown(),
       Plugin.GitHubFlavoredMarkdown(),
       Plugin.TableOfContents(),
       Plugin.CrawlLinks({}),
@@ -293,8 +300,6 @@ export function load() {
 }
 ```
 
-或者直接在 `quartz/styles/` 目录下创建 CSS 文件（取决于你的 Quartz 版本）。
-
 ### 3.5 logo 和封面图
 
 ```typescript
@@ -415,7 +420,7 @@ on:
       - main
       - master
       - Github-Pags
-  workflow_dispatch:
+   workflow_dispatch:
    
 permissions:
   contents: read
@@ -545,6 +550,8 @@ git commit -m "Fix: Convert submodules to regular directories"
 git push origin Github-Pags
 ```
 
+---
+
 ### 5.2 问题：push 后 workflow 不自动运行
 
 #### 原因
@@ -563,45 +570,73 @@ on:
       - Github-Pags  # 添加你的分支
 ```
 
+---
+
 ### 5.3 问题：图片显示 404
 
 #### 问题描述
-构建后图片显示不出来，请求路径是 `/0000assets/...` 返回 404。
+构建后图片显示不出来，请求路径是 `/0000assets/...` 返回 404，但文件已经复制到 public 目录。
 
 #### 解决方案
 
-1. 关闭 SPA：
+**方案一（推荐）**：关闭 SPA（单页应用）
+
+Quartz 默认启用 SPA，但在静态部署时 SPA 的路径解析可能出现问题。关闭 SPA 可以让图片使用传统的相对路径解析：
+
 ```typescript
+// quartz.config.ts
 enableSPA: false,
 ```
 
-2. 使用绝对路径：
+**方案二**：使用相对路径
+
+在 Markdown 中使用标准的相对路径引用图片（Quartz 会自动处理路径解析）：
+
 ```markdown
-![](!0000assets/filename.png)
+![](0000assets/filename.png)
 ```
 
-### 5.4 问题：公式不显示
+或者使用Obsidian附件文件夹语法：
+
+```markdown
+![](file.jpg)
+```
+
+#### 原因分析
+当启用 SPA 时，Quartz 使用 JavaScript 进行客户端路由和路径计算。如果文件结构和 slug 结构不完全匹配，相对路径计算会出错，导致 404。关闭 SPA 后，图片使用传统的 HTML 相对路径解析，能够正常工作。
+
+---
+
+### 5.4 问题：公式不显示 / 显示为原始代码
 
 #### 问题描述
-LaTeX 公式显示为原始代码。
+LaTeX 公式不渲染，显示为原始代码。
 
 #### 解决方案
 
-**方案一（推荐）**：切换到 MathJax
+**方案一（推荐）**：切换到 MathJax 渲染引擎
 
 ```typescript
+// quartz.config.ts
 Plugin.Latex({ renderEngine: "mathjax" }),
 ```
 
-**方案二**：删除 `\tag{}` 命令
+**方案二**：删除所有 `\tag{}` 命令
 
 ```latex
-# 错误
+# 错误示例
 $$F_{clock} = 1/T_{clock}\tag{1}$$
 
-# 正确
+# 正确示例
 $$F_{clock} = 1/T_{clock}$$
 ```
+
+**问题原因**：
+- `\tag{}` 是 LaTeX 的 AMS 数学包功能，用于给公式添加编号
+- KaTeX 对 `\tag{}` 支持不完整，在行间公式中使用会报错导致整个公式渲染失败
+- MathJax 对 `\tag{}` 支持更好
+
+---
 
 ### 5.5 问题：CustomOgImages 错误
 
@@ -610,13 +645,14 @@ $$F_{clock} = 1/T_{clock}$$
 
 #### 解决方案
 
-禁用 CustomOgImages 插件：
+在 `quartz.config.ts` 中禁用 CustomOgImages 插件：
 
 ```typescript
-// quartz.config.ts
 // Comment out CustomOgImages to speed up build time
 // Plugin.CustomOgImages(),
 ```
+
+---
 
 ### 5.6 问题：页面显示旧内容
 
@@ -629,6 +665,17 @@ $$F_{clock} = 1/T_{clock}$$
 ```bash
 git commit --allow-empty -m "Trigger rebuild"
 git push origin Github-Pags
+```
+
+---
+
+### 5.7 缓存目录
+
+Quartz 的缓存目录位于：`quartz/.quartz-cache/`
+
+清理缓存：
+```bash
+rm -rf .quartz-cache
 ```
 
 ---
@@ -708,7 +755,7 @@ git add -A && git commit -m "Update" && git push origin Github-Pags
 | 网站只显示欢迎页 | 内容文件夹是 git submodule | `git rm --cached` + `git add` |
 | GitHub 上文件夹显示 "submodule" | 同上 | 同上 |
 | push 后 workflow 不运行 | workflow 没监听该分支 | 添加分支名到 workflow |
-| 图片 404 | 路径问题 | 使用 `!` 前缀绝对路径 |
+| 图片 404 | ���径���题 | 使用 `!` 前缀绝对路径 |
 | 公式不显示 | KaTeX 不支持 `\tag{}` | 切换到 MathJax |
 | CustomOgImages 错误 | 插件兼容问题 | 禁用该插件 |
 | 页面显示旧内容 | 缓存问题 | 等待或手动触发构建 |
@@ -721,6 +768,6 @@ git add -A && git commit -m "Update" && git push origin Github-Pags
 
 ---
 
-*文档版本：v1.0*
+*文档版本：v2.0*
 *更新时间：2026-04-25*
 *Quartz 版本：4.5.2+*

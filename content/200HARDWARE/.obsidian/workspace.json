@@ -166,13 +166,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "000Excaildraw/Drawing 2025-12-14 22.27.43.excalidraw.md",
+                "file": "300高速电路设计与电磁兼容技术指南/资料/高速电路设计实践 (王剑宇, 苏颖) (Z-Library).pdf",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Drawing 2025-12-14 22.27.43.excalidraw 的大纲"
+              "title": "高速电路设计实践 (王剑宇, 苏颖) (Z-Library) 的大纲"
             }
           },
           {
@@ -241,11 +241,7 @@
                 "state": {
                   "type": "pdf",
                   "state": {
-                    "file": "300高速电路设计与电磁兼容技术指南/资料/高速电路设计实践 (王剑宇, 苏颖) (Z-Library).pdf",
-                    "page": 17,
-                    "left": -316,
-                    "top": 735,
-                    "zoom": 1.25
+                    "file": "300高速电路设计与电磁兼容技术指南/资料/高速电路设计实践 (王剑宇, 苏颖) (Z-Library).pdf"
                   },
                   "icon": "lucide-file-text",
                   "title": "高速电路设计实践 (王剑宇, 苏颖) (Z-Library)"
@@ -264,8 +260,9 @@
       }
     ]
   },
-  "active": "ed415f3c04d084ff",
+  "active": "8680e0e4724dcfa9",
   "lastOpenFiles": [
+    "000Excaildraw/Drawing 2025-12-14 22.27.43.excalidraw.md",
     "000templates/Default.md",
     "200硬件电路/220其他电路随机整理/11、运放的电阻计算.md",
     "200硬件电路/220其他电路随机整理/10、运放稳定性分析.md",
@@ -296,7 +293,6 @@
     "200硬件电路/210DCDC-LDO电源设计/210LDO/0000assets/3、功率管",
     "200硬件电路/210DCDC-LDO电源设计/210LDO/2、LDO.md",
     "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/01-高频信号的界定标准与临界点判断.md",
-    "conflict-files-obsidian-git.md",
     "0000assets/conflict-files-obsidian-git",
     "0000assets",
     "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/0000assets/02-集总参数与分布参数系统的分水岭",

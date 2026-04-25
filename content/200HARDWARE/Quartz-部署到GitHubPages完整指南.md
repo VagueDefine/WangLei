@@ -1,153 +1,410 @@
----
-title: Quartz 部署到 GitHub Pages 完整指南
-tags:
-  - Quartz
-  - 博客
-  - 部署
-  - GitHub
----
+# Quartz 部署到 GitHub Pages 完整指南
 
-> 本文档是 Quartz 部署的完整指南，包含安装、配置、部署流程，以及常见问题的解决方案。
-> 适用于 Windows 环境，Quartz 版本 4.5.2。
+> 本文档是 Quartz 4 部署的完整指南，包含安装、配置、主题切换、部署流程以及常见问题的解决方案。
+> 适用于 Windows 环境，Quartz 版本 4.5.2+。
 
 ---
 
-## 第一部分：Quartz 基础
+## 目录
 
-### 1.1 什么是 Quartz
+1. [第一章：环境准备与安装](#第一章环境准备与安装)
+2. [第二章：本地配置与使用](#第二章本地配置与使用)
+3. [第三章：主题自定义](#第三章主题自定义)
+4. [第四章：部署到 GitHub Pages](#第四章部署到-github-pages)
+5. [第五章：问题排查与解决](#第五章问题排查与解决)
+6. [第六章：日常维护](#第六章日常维护)
+7. [附录](#附录)
 
-Quartz 是一个基于 Obsidian 笔记库的静态网站生成器，可以将你的 Obsidian 笔记发布为个人网站、数字花园或博客。
+---
 
-### 1.2 环境要求
+## 第一章：环境准备与安装
 
-- **Node.js**: 18.x 或更高版本
-- **Git**: 用于版本控制
-- **Obsidian**: 笔记库（可选，本地编辑用）
+### 1.1 环境要求
 
-### 1.3 安装步骤
+| 要求 | 版本 |
+|------|------|
+| Node.js | 18.x 或更高 |
+| Git | 任意版本 |
+| npm | 随 Node.js 一起安装 |
 
-#### 1.3.1 克隆 Quartz 模板
+检查安装：
+```powershell
+node --version   # 应该是 18.x.x 或更高
+npm --version
+git --version
+```
 
-```bash
-# 创建存放目录
+### 1.2 安装步骤
+
+#### 步骤 1：创建项目目录
+
+```powershell
+# 在你喜欢的位置创建目录
 mkdir quartz
 cd quartz
+```
 
-# 克隆 Quartz 官方模板
+#### 步骤 2：克隆 Quartz 模板
+
+```bash
+# 克隆官方模板（推荐）
 git clone https://github.com/jackyzha0/quartz.git
 
-# 进入目录
-cd quartz
+# 如果你想用特定版本
+git clone https://github.com/jackyzha0/quartz.git --branch v4.5.2
+```
 
-# 安装依赖
+#### 步骤 3：进入目录
+
+```bash
+cd quartz
+```
+
+#### 步骤 4：重命名配置文件
+
+```bash
+# Quartz 4 的配置文件名可能需要调整
+# 如果有 cp quartz.config.ts.example quartz.config.ts 则执行
+```
+
+#### 步骤 5：安装依赖
+
+```bash
 npm install
 ```
 
-#### 1.3.2 配置笔记库
+#### 步骤 6：测试运行
 
-将你的 Obsidian 笔记库复制到 `content` 目录：
+```bash
+npx quartz build --serve
+```
+
+访问 http://localhost:8080 应该能看到默认页面。
+
+### 1.3 导入你的 Obsidian 笔记
+
+1. 打开你的 Obsidian 仓库目录
+2. 复制整个内容到 `quartz/content` 目录
 
 ```
 quartz/
-├── content/          # 你的笔记目录（复制你的 Obsidian 库）
-│   ├── index.md      # 网站首页
+├── content/          # 你的笔记目录
+│   ├── index.md     # 网站首页（确保有这个文件）
 │   ├── 000learning/ # 学习笔记
 │   └── 200HARDWARE/ # 硬件笔记
-├── quartz.config.ts  # 配置文件
-├── quartz.layout.ts # 布局配置
 └── ...
 ```
 
-#### 1.3.3 配置文件说明
+---
 
-`quartz.config.ts` 是主配置文件，核心配置项：
+## 第二章：本地配置与使用
+
+### 2.1 配置文件说明
+
+Quartz 的主配置文件是 `quartz.config.ts`，核心配置项：
 
 ```typescript
+import { QuartzConfig } from "./quartz/cfg"
+import * as Plugin from "./quartz/plugins"
+
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "我的数字花园",     // 网站标题
-    pageTitleSuffix: "",
-    enableSPA: false,            // 是否启用 SPA
-    enablePopovers: true,        // 是否启用弹出卡片
-    baseUrl: "yourname.github.io/repo/",  // 网站基础 URL
+    pageTitleSuffix: "",          // 标题后缀
+    enableSPA: false,             // 是否启用 SPA（单页应用）
+    enablePopovers: true,          // 是否启用悬停卡片
+    locale: "zh-CN",              // 语言
+    baseUrl: "yourname.github.io/repo/",  // 网站基础 URL（部署时必须填写）
     ignorePatterns: [             // 忽略的文件/目录
       "private",
       "**/000templates",
       "**/000Excaildraw",
       ".obsidian",
       ".git",
+      ".gitignore",
     ],
+    defaultDateType: "modified",  // 默认日期类型
   },
   plugins: {
-    // 插件配置
+    transformers: [
+      Plugin.FrontMatter(),
+      Plugin.CreatedModifiedDate({}),
+      Plugin.SyntaxHighlighting({}),
+      Plugin.ObsidianFlavoredMarkdown({}),
+      Plugin.GitHubFlavoredMarkdown(),
+      Plugin.TableOfContents(),
+      Plugin.CrawlLinks({}),
+      Plugin.Description(),
+      Plugin.Latex({}),
+    ],
+    filters: [Plugin.RemoveDrafts()],
+    emitters: [
+      Plugin.AliasRedirects(),
+      Plugin.ComponentResources(),
+      Plugin.ContentPage(),
+      Plugin.FolderPage(),
+      Plugin.TagPage(),
+      Plugin.ContentIndex({}),
+      Plugin.Assets(),
+      Plugin.Static(),
+      Plugin.Favicon(),
+      Plugin.NotFoundPage(),
+    ],
   },
-};
+}
+
+export default config
 ```
 
----
-
-## 第二部分：本地使用
-
-### 2.1 本地开发
+### 2.2 常用命令
 
 ```bash
-cd C:/Users/16344/Desktop/quartz/quartz
+# 本地开发（带热重载）
 npx quartz build --serve
-```
 
-访问 http://localhost:8080 查看本地网站。
+# 构建静态文件
+npx quartz build
 
-### 2.2 构建静态文件
-
-```bash
+# 构建并指定输出目录
 npx quartz build --output public
+
+# 清理缓存
+rm -rf .quartz-cache
 ```
 
-生成的文件在 `public/` 目录。
+### 2.3 访问本地网站
 
-### 2.3 清理缓存
+运行 `npx quartz build --serve` 后，访问：
 
-```bash
-rm -rf .quartz-cache
-# 或
-rmdir /s /q .quartz-cache
+- http://localhost:8080
+- http://127.0.0.1:8080
+
+---
+
+## 第三章：主题自定义
+
+### 3.1 主题配置文件位置
+
+主题配置在 `quartz.config.ts` 的 `theme` 部分：
+
+```typescript
+const config: QuartzConfig = {
+  // ... 其他配置
+  configuration: {
+    // ... 其他配置
+  },
+  // 在这里添加 theme 配置
+  theme: {
+    fontOrigin: "googleFonts",  // 字体来源："googleFonts" 或 "local"
+    cdnCaching: true,           // CDN 缓存
+    typography: {
+      header: "Lexend",          // 标题字体
+      body: "Inter",             // 正文字体
+      code: "JetBrains Mono",    // 代码字体
+    },
+    colors: {
+      lightMode: {               // 亮色模式
+        light: "#faf4ed",       # 背景色
+        lightgray: "#cecacd",    # 边框/分割线
+        gray: "#9893a5",         # 次要文字
+        darkgray: "#575279",    # 主要文字
+        dark: "#26233a",         # 标题
+        secondary: "#d7827e",   # 链接/强调
+        tertiary: "#56949f",     # hover 效果
+        highlight: "rgba(223, 218, 217, 0.5)",
+        textHighlight: "#cecacd",
+      },
+      darkMode: {               # 暗色模式
+        light: "#26233a",
+        lightgray: "#42404f",
+        gray: "#6e6a86",
+        darkgray: "#e0def4",
+        dark: "#faf4ed",
+        secondary: "#ebbcba",
+        tertiary: "#56949f",
+        highlight: "rgba(64, 61, 82, 0.5)",
+        textHighlight: "#524f67",
+      },
+    },
+  },
+}
+```
+
+### 3.2 可用字体
+
+Google Fonts 推荐：
+
+| 用途 | 字体名称 |
+|------|----------|
+| 标题 | Lexend, Schibsted Grotesk, Poppins |
+| 正文 | Inter, Source Sans Pro, Lora |
+| 代码 | JetBrains Mono, Fira Code, IBM Plex Mono |
+
+在 [Google Fonts](https://fonts.google.com/) 选择喜欢的字体，然后在 typography 中填写字体名称。
+
+### 3.3 预设主题
+
+Quartz 提供了几种预设配色方案，你可以直接使用或修改：
+
+```typescript
+// 亮色主题示例
+lightMode: {
+  light: "#faf8f8",      // 背景：米白色
+  lightgray: "#e5e5e5",   // 边框
+  gray: "#b8b8b8",        // 次要文字
+  darkgray: "#4e4e4e",   // 主要文字
+  dark: "#2b2b2b",       // 标题
+  secondary: "#284b63",   // 链接
+  tertiary: "#84a59d",   // hover
+},
+
+// 深色主题示例
+darkMode: {
+  light: "#161618",       // 背景：深色
+  lightgray: "#393639",
+  gray: "#646464",
+  darkgray: "#d4d4d4",
+  dark: "#ebebec",
+  secondary: "#7b97aa",
+  tertiary: "#84a59d",
+},
+```
+
+### 3.4 自定义 CSS
+
+如果需要更细致的样式调整，可以创建自定义 CSS：
+
+1. 在 `quartz/` 目录下创建 `styles/` 目录（如果不存在）
+2. 创建 `custom.css` 文件
+3. 在 `quartz.layout.ts` 中引入
+
+```typescript
+// quartz.layout.ts
+import { QuartzConfig } from "./quartz/cfg"
+import { buildPage } from "./quartz/build"
+import { defaultLayout } from "./quartz/layout"
+
+// ... 在 defaultLayout 后添加自定义样式
+export function load() {
+  return {
+    ...defaultLayout(),
+    css: [...defaultLayout().css, "/styles/custom.css"],
+  }
+}
+```
+
+或者直接在 `quartz/styles/` 目录下创建 CSS 文件（取决于你的 Quartz 版本）。
+
+### 3.5 logo 和封面图
+
+```typescript
+configuration: {
+  pageTitle: "我的网站",
+  // 添加 emoji 作为 favicon
+}
+```
+
+或者在 `quartz/plugins/emitters/Favicon.ts` 中配置自定义图标。
+
+### 3.6 完整主题配置示例
+
+```typescript
+const config: QuartzConfig = {
+  configuration: {
+    pageTitle: "王雷的数字花园",
+    pageTitleSuffix: "",
+    enableSPA: false,
+    enablePopovers: true,
+    locale: "zh-CN",
+    baseUrl: "vaguedefine.github.io/WangLei/",
+    ignorePatterns: [
+      "private",
+      "**/000templates",
+      "**/000Excaildraw",
+      ".obsidian",
+      ".git",
+      ".gitignore",
+    ],
+    defaultDateType: "modified",
+  },
+  theme: {
+    fontOrigin: "googleFonts",
+    cdnCaching: true,
+    typography: {
+      header: "Lexend",
+      body: "Inter",
+      code: "JetBrains Mono",
+    },
+    colors: {
+      lightMode: {
+        light: "#faf4ed",
+        lightgray: "#cecacd",
+        gray: "#9893a5",
+        darkgray: "#575279",
+        dark: "#26233a",
+        secondary: "#d7827e",
+        tertiary: "#56949f",
+        highlight: "rgba(223, 218, 217, 0.5)",
+        textHighlight: "#cecacd",
+      },
+      darkMode: {
+        light: "#26233a",
+        lightgray: "#42404f",
+        gray: "#6e6a86",
+        darkgray: "#e0def4",
+        dark: "#faf4ed",
+        secondary: "#ebbcba",
+        tertiary: "#56949f",
+        highlight: "rgba(64, 61, 82, 0.5)",
+        textHighlight: "#524f67",
+      },
+    },
+  },
+}
 ```
 
 ---
 
-## 第三部分：部署到 GitHub Pages
+## 第四章：部署到 GitHub Pages
 
-### 3.1 创建 GitHub 仓库
+### 4.1 创建 GitHub 仓库
 
-1. 登录 https://github.com
-2. 点击 "New repository"
+1. 打开 https://github.com
+2. 点击右上角的 "+" → "New repository"
 3. 填写仓库名（如 `WangLei`）
 4. 选择 "Public"
-5. 点击 "Create repository"
+5. 不要勾选任何初始化选项
+6. 点击 "Create repository"
 
-### 3.2 创建部署分支
+### 4.2 初始化本地仓库
 
 ```bash
 cd C:/Users/16344/Desktop/quartz/quartz
 
 # 初始化 git（如果还没有）
 git init
-git add -A
-git commit -m "Initial commit"
 
+# 添加所有文件
+git add -A
+
+# 首次提交
+git commit -m "Initial commit"
+```
+
+### 4.3 创建部署分支
+
+```bash
 # 创建并切换到部署分支
 git checkout -b Github-Pags
 
-# 添加远程仓库
+# 推送
 git remote add origin https://github.com/你的用户名/仓库名.git
-
-# 推送到远程
-git push origin Github-Pags
+git push -u origin Github-Pags
 ```
 
-### 3.3 配置 GitHub Actions
+### 4.4 创建 GitHub Actions 工作流
 
-创建 `.github/workflows/deploy.yml`：
+创建 `.github/workflows/deploy.yml` 文件：
 
 ```yaml
 name: Deploy Quartz site to GitHub Pages
@@ -211,45 +468,61 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-### 3.4 启用 GitHub Pages
+**注意**：确保 `.github/workflows/deploy.yml` 文件在 `Github-Pags` 分支中。
 
-1. 进入仓库设置 → Pages
+### 4.5 启用 GitHub Pages
+
+1. 进入仓库 → Settings → Pages
 2. Source 选择 "Deploy from a branch"
 3. Branch 选择 `Github-Pags`，目录 `/ (root)`
 4. 点击 Save
 
-### 3.5 获取网站 URL
+### 4.6 获取网站 URL
 
-部署完成后，GitHub 会提供网站 URL，格式为：`https://用户名.github.io/仓库名/`
+部署完成后，GitHub 会显示网站 URL，格式为：
+
+```
+https://你的用户名.github.io/仓库名/
+```
+
+例如：https://vaguedefine.github.io/WangLei/
+
+### 4.7 配置 baseUrl
+
+在 `quartz.config.ts` 中设置正确的 baseUrl：
+
+```typescript
+baseUrl: "vaguedefine.github.io/WangLei/",
+```
+
+**注意**：如果 URL 是 `https://vaguedefine.github.io/WangLei/`，则 baseUrl 应该是 `/WangLei/` 或者 `vaguedefine.github.io/WangLei/`（带或者不带斜杠都可以，Quartz 会自动处理）。
 
 ---
 
-> 📝 **常见问题排查**请查看：[[Quartz 问题修复笔记]]
+## 第五章：问题排查与解决
 
-### 4.1 问题：网站只显示欢迎页，内容不显示
+### 5.1 问题：网站只显示欢迎页，内容不显示
 
 #### 问题描述
 构建成功，但网站只显示 index.md 的内容，子文件夹（如 `000learning`、`200HARDWARE`）中的笔记不显示。
 
-#### 排查步骤
+#### 排查 1：检查 GitHub API
 
-1. **检查 GitHub API**：
-   ```
-   https://api.github.com/repos/你的仓库/contents/content/文件夹名
-   ```
+```
+https://api.github.com/repos/你的用户名/仓库名/contents/content/文件夹名
+```
 
-2. **检查 Git 树结构**：
-   ```bash
-   git ls-tree -r HEAD content/
-   ```
+如果返回 `"type": "submodule"`，说明文件夹是作为 git 子模块存储的。
 
-#### 4.1.1 解决方案：修复 Git Submodule 问题
+#### 排查 2：检查 Git 树结构
 
-**原因**：文件夹原本是独立 Git 仓库，被存储为 git submodule（`160000` 模式）。
+```bash
+git ls-tree -r HEAD content/
+```
 
-**症状**：GitHub API 返回 `"type": "submodule"`
+如果看到 `160000` 模式，说明是子模块。
 
-**解决步骤**：
+#### 解决方案：修复 Git Submodule 问题
 
 ```bash
 cd C:/Users/16344/Desktop/quartz/quartz
@@ -262,22 +535,24 @@ git rm --cached content/200HARDWARE
 git add content/000learning/ content/200HARDWARE/
 
 # 3. 验证本地构建
-npx quartz build --output public
+npx quartz build
 
 # 4. 提交
+git add -A
 git commit -m "Fix: Convert submodules to regular directories"
 
 # 5. 推送
 git push origin Github-Pags
 ```
 
-### 4.2 问题：push 后 workflow 不自动运行
+### 5.2 问题：push 后 workflow 不自动运行
 
 #### 原因
-workflow 文件的 `branches` 配置没有包含你的部署分支。
+workflow 配置没有包含你的部署分支。
 
-#### 解决
-在 workflow 文件中添加你的分支：
+#### 解决方案
+
+编辑 `.github/workflows/deploy.yml`：
 
 ```yaml
 on:
@@ -285,35 +560,36 @@ on:
     branches:
       - main
       - master
-      - Github-Pags  # 添加这一行
+      - Github-Pags  # 添加你的分支
 ```
 
-### 4.3 图片显示 404
+### 5.3 问题：图片显示 404
 
 #### 问题描述
 构建后图片显示不出来，请求路径是 `/0000assets/...` 返回 404。
 
 #### 解决方案
-使用绝对路径，并关闭 SPA：
 
+1. 关闭 SPA：
 ```typescript
-// quartz.config.ts
 enableSPA: false,
 ```
 
-在 Markdown 中使用：
+2. 使用绝对路径：
 ```markdown
 ![](!0000assets/filename.png)
 ```
 
-### 4.4 公式不显示 / 显示为原始代码
+### 5.4 问题：公式不显示
+
+#### 问题描述
+LaTeX 公式显示为原始代码。
 
 #### 解决方案
 
 **方案一（推荐）**：切换到 MathJax
 
 ```typescript
-// quartz.config.ts
 Plugin.Latex({ renderEngine: "mathjax" }),
 ```
 
@@ -327,12 +603,13 @@ $$F_{clock} = 1/T_{clock}\tag{1}$$
 $$F_{clock} = 1/T_{clock}$$
 ```
 
-### 4.5 CustomOgImages 错误
+### 5.5 问题：CustomOgImages 错误
 
 #### 问题描述
 构建时报错：`codepoint 31-20e3 not found in map`
 
 #### 解决方案
+
 禁用 CustomOgImages 插件：
 
 ```typescript
@@ -341,112 +618,109 @@ $$F_{clock} = 1/T_{clock}$$
 // Plugin.CustomOgImages(),
 ```
 
----
+### 5.6 问题：页面显示旧内容
 
-## 第五部分：主题配置
+#### 解决方案
 
-### 5.1 配置位置
-
-`quartz.config.ts` 中的 `theme` 部分：
-
-```typescript
-theme: {
-  fontOrigin: "googleFonts",  // 字体来源
-  cdnCaching: true,            // CDN 缓存
-  typography: {
-    header: "Lexend",         // 标题字体
-    body: "Inter",            // 正文字体
-    code: "JetBrains Mono",    // ���码��体
-  },
-  colors: {
-    lightMode: {
-      light: "#faf4ed",        // 背景
-      lightgray: "#cecacd",    // 边框
-      gray: "#9893a5",         // 次要文字
-      darkgray: "#575279",     // 主要文字
-      dark: "#26233a",         // 标题
-      secondary: "#d7827e",    // 链接/强调
-      tertiary: "#56949f",    // hover
-    },
-    darkMode: {
-      light: "#26233a",
-      lightgray: "#42404f",
-      gray: "#6e6a86",
-      darkgray: "#e0def4",
-      dark: "#faf4ed",
-      secondary: "#ebbcba",
-      tertiary: "#56949f",
-    },
-  },
-},
-```
-
----
-
-## 第六部分：部署到 Vercel（可选）
-
-如果不想用 GitHub Pages，也可以部署到 Vercel：
-
-### 6.1 创建 vercel.json
-
-```json
-{
-  "cleanUrls": true
-}
-```
-
-### 6.2 Vercel 控制台配置
-
-- Framework Preset: Other
-- Build Command: `npx quartz build`
-
----
-
-## 第七部分：日常维护
-
-### 7.1 更新笔记
+1. **等待几分钟**：GitHub Pages 有缓存
+2. **清除浏览器缓存**：使用 Ctrl+Shift+R 或无痕模式
+3. **重新触发构建**：推送一个空提交
 
 ```bash
-cd C:/Users/16344/Desktop/quartz/quartz
-git add -A
-git commit -m "Update notes"
+git commit --allow-empty -m "Trigger rebuild"
 git push origin Github-Pags
 ```
 
-### 7.2 手动触发部署
+---
 
-1. 访问仓库的 Actions 页面
+## 第六章：日常维护
+
+### 6.1 更新笔记后自动部署
+
+```bash
+cd C:/Users/16344/Desktop/quartz/quartz
+
+# 添加更改
+git add -A
+
+# 提交
+git commit -m "Update: 添加新笔记"
+
+# 推送（会自动触发 workflow）
+git push origin Github-Pags
+```
+
+### 6.2 手动触发部署
+
+1. 打开仓库的 Actions 页面
 2. 点击 "Deploy Quartz site to GitHub Pages"
-3. 点击 "Run workflow"
+3. 点击 "Run workflow" → "Run workflow"
+
+### 6.3 回滚版本
+
+```bash
+# 查看历史
+git log --oneline
+
+# 回滚到特定版本
+git reset --hard 提交的SHA
+
+# 强制推送
+git push --force origin Github-Pags
+```
 
 ---
 
-## 附录：关键文件位置
+## 附录
 
-| 文件 | 说明 |
-|------|------|
+### 附录 A：关键文件位置
+
+| 文件/目录 | 说明 |
+|-----------|------|
 | `quartz.config.ts` | 主配置文件 |
 | `quartz.layout.ts` | 布局配置 |
+| `quartz/plugins/` | 插件目录 |
 | `content/` | 笔记目录 |
 | `public/` | 构建输出目录 |
-| `.quartz-cache/` | Quartz 缓存目录 |
+| `.quartz-cache/` | 缓存目录 |
 | `.github/workflows/deploy.yml` | GitHub Actions 配置 |
 
----
+### 附录 B：常用命令速查
 
-## 常见问题速查表
+```bash
+# 本地开发
+npx quartz build --serve
+
+# 构建
+npx quartz build
+
+# 清理缓存
+rm -rf .quartz-cache
+
+# 提交更新
+git add -A && git commit -m "Update" && git push origin Github-Pags
+```
+
+### 附录 C：常见问题速查表
 
 | 问题 | 原因 | 解决方案 |
 |------|------|----------|
-| 网站只显示欢迎页 | 内容文件夹是 git submodule | `git rm --cached` + `git add` 重做 |
+| 网站只显示欢迎页 | 内容文件夹是 git submodule | `git rm --cached` + `git add` |
 | GitHub 上文件夹显示 "submodule" | 同上 | 同上 |
 | push 后 workflow 不运行 | workflow 没监听该分支 | 添加分支名到 workflow |
 | 图片 404 | 路径问题 | 使用 `!` 前缀绝对路径 |
-| 公式不显示 | KaTeX 不支持 `\tag{}` | 切换到 MathJax 或删除 `\tag{}` |
+| 公式不显示 | KaTeX 不支持 `\tag{}` | 切换到 MathJax |
 | CustomOgImages 错误 | 插件兼容问题 | 禁用该插件 |
+| 页面显示旧内容 | 缓存问题 | 等待或手动触发构建 |
+
+### 附录 D：参考链接
+
+- [Quartz 官方文档](https://quartz.jzhao.xyz/)
+- [Quartz GitHub 仓库](https://github.com/jackyzha0/quartz)
+- [Google Fonts](https://fonts.google.com/)
 
 ---
 
-*整理时间：2026-04-25*
-*Quartz 版本：4.5.2*
-*参考文档：https://quartz.jzhao.xyz/*
+*文档版本：v1.0*
+*更新时间：2026-04-25*
+*Quartz 版本：4.5.2+*

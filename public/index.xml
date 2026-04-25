@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>Quartz 4</title>
+      <link>https://WangLei.github.io</link>
+      <description>Last 10 notes on Quartz 4</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>05-电磁兼容性的核心定义</title>
+    <link>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/02-%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E4%B8%8E%E9%98%B2%E6%8A%A4%E5%9F%BA%E7%A1%80/05-%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%80%A7%E7%9A%84%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%B9%89</link>
+    <guid>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/02-%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E4%B8%8E%E9%98%B2%E6%8A%A4%E5%9F%BA%E7%A1%80/05-%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%80%A7%E7%9A%84%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%B9%89</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sat, 25 Apr 2026 07:13:35 GMT</pubDate>
+  </item><item>
+    <title>02-单点接地与多点接地的适用频段</title>
+    <link>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/02-%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E4%B8%8E%E9%98%B2%E6%8A%A4%E5%9F%BA%E7%A1%80/02-%E5%8D%95%E7%82%B9%E6%8E%A5%E5%9C%B0%E4%B8%8E%E5%A4%9A%E7%82%B9%E6%8E%A5%E5%9C%B0%E7%9A%84%E9%80%82%E7%94%A8%E9%A2%91%E6%AE%B5</link>
+    <guid>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/02-%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E4%B8%8E%E9%98%B2%E6%8A%A4%E5%9F%BA%E7%A1%80/02-%E5%8D%95%E7%82%B9%E6%8E%A5%E5%9C%B0%E4%B8%8E%E5%A4%9A%E7%82%B9%E6%8E%A5%E5%9C%B0%E7%9A%84%E9%80%82%E7%94%A8%E9%A2%91%E6%AE%B5</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sat, 25 Apr 2026 07:13:35 GMT</pubDate>
+  </item><item>
+    <title>01-传导骚扰与辐射骚扰的区别</title>
+    <link>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/02-%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E4%B8%8E%E9%98%B2%E6%8A%A4%E5%9F%BA%E7%A1%80/01-%E4%BC%A0%E5%AF%BC%E9%AA%9A%E6%89%B0%E4%B8%8E%E8%BE%90%E5%B0%84%E9%AA%9A%E6%89%B0%E7%9A%84%E5%8C%BA%E5%88%AB</link>
+    <guid>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/02-%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E4%B8%8E%E9%98%B2%E6%8A%A4%E5%9F%BA%E7%A1%80/01-%E4%BC%A0%E5%AF%BC%E9%AA%9A%E6%89%B0%E4%B8%8E%E8%BE%90%E5%B0%84%E9%AA%9A%E6%89%B0%E7%9A%84%E5%8C%BA%E5%88%AB</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sat, 25 Apr 2026 07:13:35 GMT</pubDate>
+  </item><item>
+    <title>03-硬件设计生命周期与标准闭环流程</title>
+    <link>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/03-%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E6%A0%87%E5%87%86%E9%97%AD%E7%8E%AF%E6%B5%81%E7%A8%8B</link>
+    <guid>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/03-%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E6%A0%87%E5%87%86%E9%97%AD%E7%8E%AF%E6%B5%81%E7%A8%8B</guid>
+    <description><![CDATA[ 一、硬件设计流程 硬件设计的流程分为以下几个步骤: 步骤目的需求分析需求分析阶段的工作是制定设计的大方向，不能忽略细节，但也不能拘泥于细节。需求分析阶段的工作并不是哪一个特定工程师的工作，而应由项目经理、系统工程师、电子设计工程师、软件工程师、逻辑工程师等协作完成。概要设计详细设计调试测试 1、需求分析 需求的种类很多，与硬件开发相关的有以下几类，以以太网产品的需求分析为例，进行简单介绍。 1）整体性能要求： 如数据包转发能力、处理延时、最高处理带宽、CPU处理能力等。针对这些需求，对，可初步对CPU、存储器、交换芯片等器件进行选型。 2）功能要求： 如 QoS(Quality of Serv... ]]></description>
+    <pubDate>Sat, 25 Apr 2026 07:13:35 GMT</pubDate>
+  </item><item>
+    <title>02-集总参数与分布参数系统的分水岭</title>
+    <link>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/02-%E9%9B%86%E6%80%BB%E5%8F%82%E6%95%B0%E4%B8%8E%E5%88%86%E5%B8%83%E5%8F%82%E6%95%B0%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%88%86%E6%B0%B4%E5%B2%AD</link>
+    <guid>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/02-%E9%9B%86%E6%80%BB%E5%8F%82%E6%95%B0%E4%B8%8E%E5%88%86%E5%B8%83%E5%8F%82%E6%95%B0%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%88%86%E6%B0%B4%E5%B2%AD</guid>
+    <description><![CDATA[ 信号波长与传输线长度定义高速与低速信号。对于任意电路如何获取带宽；极高频率计算带宽的限制。 ]]></description>
+    <pubDate>Sat, 25 Apr 2026 07:13:35 GMT</pubDate>
+  </item><item>
+    <title>01-高频信号的界定标准与临界点判断</title>
+    <link>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/01-%E9%AB%98%E9%A2%91%E4%BF%A1%E5%8F%B7%E7%9A%84%E7%95%8C%E5%AE%9A%E6%A0%87%E5%87%86%E4%B8%8E%E4%B8%B4%E7%95%8C%E7%82%B9%E5%88%A4%E6%96%AD</link>
+    <guid>https://WangLei.github.io/200HARDWARE/300%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%8A%80%E6%9C%AF%E6%8C%87%E5%8D%97/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E4%B8%8EEMC%E5%9F%BA%E7%A1%80/01-%E9%AB%98%E9%80%9F%E7%94%B5%E8%B7%AF%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/01-%E9%AB%98%E9%A2%91%E4%BF%A1%E5%8F%B7%E7%9A%84%E7%95%8C%E5%AE%9A%E6%A0%87%E5%87%86%E4%B8%8E%E4%B8%B4%E7%95%8C%E7%82%B9%E5%88%A4%E6%96%AD</guid>
+    <description><![CDATA[ 对高速信号和低速信号进行界定，并提出了有效频率（带宽）的方法，即信号上升时间与带宽之间的转换 ]]></description>
+    <pubDate>Sat, 25 Apr 2026 07:13:35 GMT</pubDate>
+  </item><item>
+    <title>未命名</title>
+    <link>https://WangLei.github.io/000learning/%E6%9C%AA%E5%91%BD%E5%90%8D</link>
+    <guid>https://WangLei.github.io/000learning/%E6%9C%AA%E5%91%BD%E5%90%8D</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Sat, 25 Apr 2026 06:57:38 GMT</pubDate>
+  </item><item>
+    <title>11、运放的电阻计算</title>
+    <link>https://WangLei.github.io/200HARDWARE/200%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF/220%E5%85%B6%E4%BB%96%E7%94%B5%E8%B7%AF%E9%9A%8F%E6%9C%BA%E6%95%B4%E7%90%86/11%E3%80%81%E8%BF%90%E6%94%BE%E7%9A%84%E7%94%B5%E9%98%BB%E8%AE%A1%E7%AE%97</link>
+    <guid>https://WangLei.github.io/200HARDWARE/200%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF/220%E5%85%B6%E4%BB%96%E7%94%B5%E8%B7%AF%E9%9A%8F%E6%9C%BA%E6%95%B4%E7%90%86/11%E3%80%81%E8%BF%90%E6%94%BE%E7%9A%84%E7%94%B5%E9%98%BB%E8%AE%A1%E7%AE%97</guid>
+    <description><![CDATA[ 运放电路中各种电阻的计算 在学习运算放大器电路的时候，经常需要计算电路的: 输入阻抗Ri， 输出阻抗Ro， 同相端对地等效电阻RP, 反相端对地等效电阻RN， 这些参数很重要，在学习运放相关电路的时候经常要用到，如果不理解的话，对于后面运放电路的理解就困难重重，那今天就一次性把它说清楚。 预备知识 端口等效电阻计算（电源置零法） 因为理想电压源内阻为0，而理想电流源内阻无穷大，计算电路等效电阻时,就按这两个条件将电压源置短路，无穷大内阻以开路看待。 例如下面这道题，求端口电阻，将电压源短路、电流源断路，那么，端口电阻R=1K+1K=2K. ]]></description>
+    <pubDate>Fri, 24 Apr 2026 12:53:27 GMT</pubDate>
+  </item><item>
+    <title>4、BUCK,BOOST参数计算</title>
+    <link>https://WangLei.github.io/200HARDWARE/200%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF/210DCDC-LDO%E7%94%B5%E6%BA%90%E8%AE%BE%E8%AE%A1/220SWITCH-POWER/222%E7%94%B5%E6%84%9F%E5%BC%8F%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/4%E3%80%81BUCK,BOOST%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97</link>
+    <guid>https://WangLei.github.io/200HARDWARE/200%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF/210DCDC-LDO%E7%94%B5%E6%BA%90%E8%AE%BE%E8%AE%A1/220SWITCH-POWER/222%E7%94%B5%E6%84%9F%E5%BC%8F%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/4%E3%80%81BUCK,BOOST%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97</guid>
+    <description><![CDATA[ 电源大师12—BUCK降压电路 BOOST升压电路，电感电容参数计算，前馈电容Cff计算，负载瞬变产生的电压过冲。TPS55340 TPS54560_哔哩哔哩_bilibili 一、参数计算 电流限制选取输出电流的的1.5倍，耐压电压为2倍，输入耐压即为输入电压的2倍，输出耐压即为输出电压的2倍。 二、电容计算 电感DCR越小越好，电感内阻。同时电感SRF为自身谐振频率，要求开关管频率必须小于电感谐振频率。饱和电流为电路电流的1.5倍。 三、对于其它厂商芯片参数计算 升压用TPS55340，降压用TPS54560 计算出来的输出电容，输入电容，还有电感，可以参考使用。 四、软启动电容 当芯片开... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 12:53:05 GMT</pubDate>
+  </item><item>
+    <title>5、反激变换FLYBACK</title>
+    <link>https://WangLei.github.io/200HARDWARE/200%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF/210DCDC-LDO%E7%94%B5%E6%BA%90%E8%AE%BE%E8%AE%A1/220SWITCH-POWER/222%E7%94%B5%E6%84%9F%E5%BC%8F%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/5%E3%80%81%E5%8F%8D%E6%BF%80%E5%8F%98%E6%8D%A2FLYBACK</link>
+    <guid>https://WangLei.github.io/200HARDWARE/200%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF/210DCDC-LDO%E7%94%B5%E6%BA%90%E8%AE%BE%E8%AE%A1/220SWITCH-POWER/222%E7%94%B5%E6%84%9F%E5%BC%8F%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/5%E3%80%81%E5%8F%8D%E6%BF%80%E5%8F%98%E6%8D%A2FLYBACK</guid>
+    <description><![CDATA[ 反激变换FLYBACK 反激电源适用于≤200W的输出功率（家用电器、充电器等），更高功率（如300W以上）需优化磁芯和散热设计。 反激拓扑1—反激电路的由来 1、反激拓扑结构与输出公式推导 如图为反激电路拓扑结构，假设变压器变比为：n 推导输入输出等式，分析电感对电感运用伏秒积平衡得到： V_{in}T_{on} - \frac{di}{dt}L_m T_{off} = 0 其中T_{on} = T*DD为占空比，T_{off}为开关开启时间。\frac{di}{dt}L_m为变压器原边电压，得到： V_o = n*\frac{di}{dt}L_m 将V_o代入伏秒积平衡等式得到： V_o ... ]]></description>
+    <pubDate>Fri, 24 Apr 2026 12:53:05 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>

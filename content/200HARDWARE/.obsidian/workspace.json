@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000Excaildraw/Drawing 2025-12-14 22.27.43.excalidraw.md",
+                "file": "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/02-集总参数与分布参数系统的分水岭.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Drawing 2025-12-14 22.27.43.excalidraw"
+              "title": "02-集总参数与分布参数系统的分水岭"
             }
           }
         ]
@@ -166,13 +166,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "300高速电路设计与电磁兼容技术指南/资料/高速电路设计实践 (王剑宇, 苏颖) (Z-Library).pdf",
+                "file": "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/02-集总参数与分布参数系统的分水岭.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "高速电路设计实践 (王剑宇, 苏颖) (Z-Library) 的大纲"
+              "title": "02-集总参数与分布参数系统的分水岭 的大纲"
             }
           },
           {
@@ -223,46 +223,12 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "floating": {
-    "id": "93b57cd063f3d3ec",
-    "type": "floating",
-    "children": [
-      {
-        "id": "713db504d6785ff5",
-        "type": "window",
-        "children": [
-          {
-            "id": "d07e64a4560e9838",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "8680e0e4724dcfa9",
-                "type": "leaf",
-                "state": {
-                  "type": "pdf",
-                  "state": {
-                    "file": "300高速电路设计与电磁兼容技术指南/资料/高速电路设计实践 (王剑宇, 苏颖) (Z-Library).pdf"
-                  },
-                  "icon": "lucide-file-text",
-                  "title": "高速电路设计实践 (王剑宇, 苏颖) (Z-Library)"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical",
-        "x": 428,
-        "y": 45,
-        "width": 1063,
-        "height": 941,
-        "maximize": true,
-        "zoom": 0
-      }
-    ]
-  },
-  "active": "8680e0e4724dcfa9",
+  "active": "8bce2dd8fdab58ad",
   "lastOpenFiles": [
+    "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/01-高频信号的界定标准与临界点判断.md",
+    "200硬件电路/220其他电路随机整理/1、单转差分电路.md",
     "000Excaildraw/Drawing 2025-12-14 22.27.43.excalidraw.md",
+    "300高速电路设计与电磁兼容技术指南/资料/高速电路设计实践 (王剑宇, 苏颖) (Z-Library).pdf",
     "000templates/Default.md",
     "200硬件电路/220其他电路随机整理/11、运放的电阻计算.md",
     "200硬件电路/220其他电路随机整理/10、运放稳定性分析.md",
@@ -275,7 +241,6 @@
     "200硬件电路/220其他电路随机整理/3、电容选取.md",
     "200硬件电路/220其他电路随机整理/2、差分信号抬升电路.md",
     "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/03-硬件设计生命周期与标准闭环流程.md",
-    "300高速电路设计与电磁兼容技术指南/资料/高速电路设计实践 (王剑宇, 苏颖) (Z-Library).pdf",
     "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/02-集总参数与分布参数系统的分水岭.md",
     "200硬件电路/210DCDC-LDO电源设计/220SWITCH POWER/222电感式开关电源/6、开关电源降低振铃现象.md",
     "200硬件电路/210DCDC-LDO电源设计/220SWITCH POWER/222电感式开关电源/5、反激变换FLYBACK.md",
@@ -291,8 +256,6 @@
     "200硬件电路/210DCDC-LDO电源设计/210LDO/0000assets/1、线性电源/file-20251224160236794.webp",
     "200硬件电路/210DCDC-LDO电源设计/210LDO/0000assets/1、线性电源/file-20251224160236795.webp",
     "200硬件电路/210DCDC-LDO电源设计/210LDO/0000assets/3、功率管",
-    "200硬件电路/210DCDC-LDO电源设计/210LDO/2、LDO.md",
-    "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/01-高频信号的界定标准与临界点判断.md",
     "0000assets/conflict-files-obsidian-git",
     "0000assets",
     "300高速电路设计与电磁兼容技术指南/01-高速电路与EMC基础/01-高速电路核心概念/0000assets/02-集总参数与分布参数系统的分水岭",

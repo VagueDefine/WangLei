@@ -1,0 +1,30 @@
+@use "./base.scss";
+
+// 图片居中
+article img {
+  display: block;
+  margin: 1rem auto;
+}
+
+// 公式居中 (MathJax display mode $$...$$)
+mjx-container.MathJax[display] {
+  display: block !important;
+  text-align: center !important;
+  margin: 1rem auto !important;
+}
+
+// KaTeX display mode
+.katex-display {
+  display: block;
+  text-align: center;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+// 表格居中
+table {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+// put your custom CSS here!

@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "vaguedefine.github.io/WangLei.github.io/",
+    baseUrl: "vaguedefine.github.io/WangLei/",
     ignorePatterns: [
       "private", 
       "**/000templates", 

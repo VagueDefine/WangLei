@@ -57,6 +57,7 @@ Get-ChildItem -Path . -Recurse -Directory -Filter "000Excaildraw" -Force | Remov
 Get-ChildItem -Path . -Recurse -Directory -Filter "000templates" -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 Get-ChildItem -Path . -Recurse -Directory -Filter "main" -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 Get-ChildItem -Path . -Recurse -Directory -Filter "ExportDocument" -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+Get-ChildItem -Path . -Recurse -Directory -Filter "Excalidraw" -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 
 
 Get-ChildItem -Path . -Recurse -File -Filter ".gitignore" -Force | Remove-Item -Force -ErrorAction SilentlyContinue

@@ -932,6 +932,8 @@ Get-ChildItem -Path . -Recurse -Directory -Filter "000templates" -Force | Remove
 
 Get-ChildItem -Path . -Recurse -Directory -Filter "main" -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 
+Get-ChildItem -Path . -Recurse -Directory -Filter "ExportDocument" -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+
   
   
 

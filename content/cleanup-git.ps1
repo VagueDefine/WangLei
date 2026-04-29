@@ -64,3 +64,5 @@ Get-ChildItem -Path . -Recurse -File -Filter ".gitignore" -Force | Remove-Item -
 Get-ChildItem -Path . -Recurse -File -Filter ".gitattributes" -Force | Remove-Item -Force -ErrorAction SilentlyContinue
 
 Write-Host "Cleanup done!"
+
+

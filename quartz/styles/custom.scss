@@ -28,3 +28,26 @@ table {
 }
 
 // put your custom CSS here!
+
+// 行间距调整
+article {
+  p {
+    line-height: 2.0; // 可调整：1.6, 2.0, 2.2 等
+  }
+  
+  // 段落间距
+  p + p {
+    margin-top: 1rem;
+  }
+  
+  // 列表行间距
+  li {
+    line-height: 1.8;
+  }
+  
+  // 标题间距
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+}

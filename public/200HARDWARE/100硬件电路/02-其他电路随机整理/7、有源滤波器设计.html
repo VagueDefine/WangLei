@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>7、有源滤波器设计</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&amp;family=Inter:ital,wght@0,400;0,600;1,400;1,600&amp;family=JetBrains Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Quartz 4"/><meta property="og:title" content="7、有源滤波器设计"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="7、有源滤波器设计"/><meta name="twitter:description" content="一文讲透“有源滤波器”是如何设计的呢？ 有源滤波电路设计_有源带通滤波器电路设计-CSDN博客 滤波器分类 说到滤波器，大家肯定首先想到的是RC滤波，微带滤波，腔体(介质)滤波器等。“有源滤波器”总是显得非常模糊且神秘。 今天我们来就来讲一讲“有源滤波器”的原理和设计方法。仿真不同的典型拓扑：Sallen-key和****Multiple Feedback，解开它的神秘面纱！ 三种“滤波器”对比 在此之前先简单对比以一下其他两个类型的滤波器 （一）RC滤波器：现在已经有非常成熟的小工具计算，如果你需要我把链接附在下面： RC滤波器工具 （小工具链接：www.mwrf.net/tool/rf/2..."/><meta property="og:description" content="一文讲透“有源滤波器”是如何设计的呢？ 有源滤波电路设计_有源带通滤波器电路设计-CSDN博客 滤波器分类 说到滤波器，大家肯定首先想到的是RC滤波，微带滤波，腔体(介质)滤波器等。“有源滤波器”总是显得非常模糊且神秘。 今天我们来就来讲一讲“有源滤波器”的原理和设计方法。仿真不同的典型拓扑：Sallen-key和****Multiple Feedback，解开它的神秘面纱！ 三种“滤波器”对比 在此之前先简单对比以一下其他两个类型的滤波器 （一）RC滤波器：现在已经有非常成熟的小工具计算，如果你需要我把链接附在下面： RC滤波器工具 （小工具链接：www.mwrf.net/tool/rf/2..."/><meta property="og:image:alt" content="一文讲透“有源滤波器”是如何设计的呢？ 有源滤波电路设计_有源带通滤波器电路设计-CSDN博客 滤波器分类 说到滤波器，大家肯定首先想到的是RC滤波，微带滤波，腔体(介质)滤波器等。“有源滤波器”总是显得非常模糊且神秘。 今天我们来就来讲一讲“有源滤波器”的原理和设计方法。仿真不同的典型拓扑：Sallen-key和****Multiple Feedback，解开它的神秘面纱！ 三种“滤波器”对比 在此之前先简单对比以一下其他两个类型的滤波器 （一）RC滤波器：现在已经有非常成熟的小工具计算，如果你需要我把链接附在下面： RC滤波器工具 （小工具链接：www.mwrf.net/tool/rf/2..."/><meta property="og:image" content="https://vaguedefine.github.io/WangLei//static/og-image.png"/><meta property="og:image:url" content="https://vaguedefine.github.io/WangLei//static/og-image.png"/><meta name="twitter:image" content="https://vaguedefine.github.io/WangLei//static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="vaguedefine.github.io/WangLei/"/><meta property="og:url" content="https://vaguedefine.github.io/WangLei/200HARDWARE/100硬件电路/02-其他电路随机整理/7、有源滤波器设计"/><meta property="twitter:url" content="https://vaguedefine.github.io/WangLei/200HARDWARE/100硬件电路/02-其他电路随机整理/7、有源滤波器设计"/><link rel="icon" href="../../../static/icon.png"/><meta name="description" content="一文讲透“有源滤波器”是如何设计的呢？ 有源滤波电路设计_有源带通滤波器电路设计-CSDN博客 滤波器分类 说到滤波器，大家肯定首先想到的是RC滤波，微带滤波，腔体(介质)滤波器等。“有源滤波器”总是显得非常模糊且神秘。 今天我们来就来讲一讲“有源滤波器”的原理和设计方法。仿真不同的典型拓扑：Sallen-key和****Multiple Feedback，解开它的神秘面纱！ 三种“滤波器”对比 在此之前先简单对比以一下其他两个类型的滤波器 （一）RC滤波器：现在已经有非常成熟的小工具计算，如果你需要我把链接附在下面： RC滤波器工具 （小工具链接：www.mwrf.net/tool/rf/2..."/><meta name="generator" content="Quartz"/><link href="../../../index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiQzpcXFVzZXJzXFwxNjM0NFxcRGVza3RvcFxccXVhcnR6XFxxdWFydHpcXHF1YXJ0elxcY29tcG9uZW50c1xcc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTs7QUFJRjtFQUNFO0VBQ0E7RUFDQSIsInNvdXJjZXNDb250ZW50IjpbIi5leHBhbmQtYnV0dG9uIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbG9hdDogcmlnaHQ7XG4gIHBhZGRpbmc6IDAuNHJlbTtcbiAgbWFyZ2luOiAwLjNyZW07XG4gIHJpZ2h0OiAwOyAvLyBOT1RFOiByaWdodCB3aWxsIGJlIHNldCBpbiBtZXJtYWlkLmlubGluZS50c1xuICBjb2xvcjogdmFyKC0tZ3JheSk7XG4gIGJvcmRlci1jb2xvcjogdmFyKC0tZGFyayk7XG4gIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgYm9yZGVyOiAxcHggc29saWQ7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgb3BhY2l0eTogMDtcbiAgdHJhbnNpdGlvbjogMC4ycztcblxuICAmID4gc3ZnIHtcbiAgICBmaWxsOiB2YXIoLS1saWdodCk7XG4gICAgZmlsdGVyOiBjb250cmFzdCgwLjMpO1xuICB9XG5cbiAgJjpob3ZlciB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIGJvcmRlci1jb2xvcjogdmFyKC0tc2Vjb25kYXJ5KTtcbiAgfVxuXG4gICY6Zm9jdXMge1xuICAgIG91dGxpbmU6IDA7XG4gIH1cbn1cblxucHJlIHtcbiAgJjpob3ZlciA+IC5leHBhbmQtYnV0dG9uIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHRyYW5zaXRpb246IDAuMnM7XG4gIH1cbn1cblxuI21lcm1haWQtY29udGFpbmVyIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBjb250YWluOiBsYXlvdXQ7XG4gIHotaW5kZXg6IDk5OTtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICB3aWR0aDogMTAwdnc7XG4gIGhlaWdodDogMTAwdmg7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGRpc3BsYXk6IG5vbmU7XG4gIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNSk7XG5cbiAgJi5hY3RpdmUge1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgfVxuXG4gICYgPiAjbWVybWFpZC1zcGFjZSB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB0b3A6IDUwJTtcbiAgICBsZWZ0OiA1MCU7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgLTUwJSk7XG4gICAgaGVpZ2h0OiA4MHZoO1xuICAgIHdpZHRoOiA4MHZ3O1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG5cbiAgICAmID4gLm1lcm1haWQtY29udGVudCB7XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><script src="../../../prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://vaguedefine.github.io/WangLei//index.xml"/></head><body data-slug="200HARDWARE/100硬件电路/02-其他电路随机整理/7、有源滤波器设计"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../../..">Quartz 4</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-146"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-146" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../200HARDWARE/">200HARDWARE</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../200HARDWARE/100硬件电路/">100硬件电路</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../200HARDWARE/100硬件电路/02-其他电路随机整理/">02 其他电路随机整理</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>7、有源滤波器设计</a></div></nav><h1 class="article-title">7、有源滤波器设计</h1><p show-comma="true" class="content-meta"><time datetime="2026-04-27T09:00:04.000Z">Apr 27, 2026</time><span>13 min read</span></p></div></div><article class="popover-hint"><p><a href="https://zhuanlan.zhihu.com/p/1922820367526887844" class="external">一文讲透“有源滤波器”是如何设计的呢？<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p><a href="https://blog.csdn.net/qq_41873236/article/details/123097110" class="external">有源滤波电路设计_有源带通滤波器电路设计-CSDN博客<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<h2 id="滤波器分类">滤波器分类<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#滤波器分类" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850878.jpg" alt/></p>
+<blockquote>
+<p>说到滤波器，大家肯定首先想到的是<strong>RC滤波</strong>，<strong>微带滤波</strong>，<strong>腔体(介质)滤波</strong>器等。“<a href="https://zhida.zhihu.com/search?content_id=259706930&amp;content_type=Article&amp;match_order=1&amp;q=%E6%9C%89%E6%BA%90%E6%BB%A4%E6%B3%A2%E5%99%A8&amp;zhida_source=entity" class="external">有源滤波器<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>”总是显得非常模糊且神秘。</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850870.jpg" alt/></p>
+<p>今天我们来就来讲一讲“<strong>有源滤波器</strong>”的<strong>原理</strong>和<strong>设计方法</strong>。仿真不同的<strong>典型拓扑</strong>：<a href="https://zhida.zhihu.com/search?content_id=259706930&amp;content_type=Article&amp;match_order=1&amp;q=Sallen-key&amp;zhida_source=entity" class="external">Sallen-key<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a><strong>和****Multiple Feedback</strong>，解开它的神秘面纱！</p>
+<h2 id="三种滤波器对比">三种“滤波器”对比<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#三种滤波器对比" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>在此之前先简单对比以一下其他两个类型的滤波器</p>
+<blockquote>
+<p>（一）<strong>RC滤波器</strong>：现在已经有非常成熟的<strong>小工具</strong>计算，如果你需要我把链接附在下面：</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850875.jpg" alt/></p>
+<p>RC滤波器工具</p>
+<p>（小工具链接：<a href="https://link.zhihu.com/?target=https%3A//www.mwrf.net/tool/rf/2012/8212.html" class="external">https://www.mwrf.net/tool/rf/2012/8212.html<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>）</p>
+<p>它的推导也十分简单，就是简验的<a href="https://zhida.zhihu.com/search?content_id=259706930&amp;content_type=Article&amp;match_order=1&amp;q=%E5%88%86%E5%8E%8B%E5%AE%9A%E7%90%86&amp;zhida_source=entity" class="external">分压定理<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>，此处不做推导。(如果需要人多，可打“<strong>RC低通推导</strong>”在评论区,我再手搓一遍)</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850876.jpg" alt/></p>
+<p>传递函数</p>
+<p>这个是S域变换后的传递函数，其中S＝_ｊｗ_</p>
+<blockquote>
+<p>（二）<strong>腔体滤波器</strong>： 这是一个单独的行业分支，有比较高的门槛，包括需要很深的<strong>腔体理论</strong>，<strong>结构设计</strong>以及<strong>可靠性</strong>试验。</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850864.jpg" alt/></p>
+<p>腔体滤波器</p>
+<p>腔体滤波器的仿真,生产都需要大量人力，时间成本，价格一般比较<strong>昂贵</strong>。但好在性能非常优良且稳定**(插损小,抑制强,稳定可靠**)，在卫星，基站等产品上用的非常广泛</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850860.jpg" alt/></p>
+<p>生产车间</p>
+<p>最近的新技术“<strong>金属腔体免调螺滤波器</strong> ”成为行业热点，大家感兴趣自搜</p>
+<blockquote>
+<p>（三）<strong>有源滤波器</strong>： 是基于**<a href="https://zhida.zhihu.com/search?content_id=259706930&amp;content_type=Article&amp;match_order=1&amp;q=%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8&amp;zhida_source=entity" class="external">运算放大器<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>为核心<strong>的</strong>滤波电路**。有另外一套分析方法，具有仿真迭代速度快，价格便宜等优点。一般适用场景是<strong>低频</strong>（１ＭＨｚ以下）如“<strong>锁相环</strong>”电路,<strong>电源</strong>电路,“<strong>仪器仪表</strong>”电路等</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850879.jpg" alt/></p>
+<p>有源滤波器的传递函数，是根据无源RC滤波器的传递函数而来。如果是多级级联，传递函数也是一个道理。</p>
+<h2 id="有源滤波器的设计分析">“有源滤波器”的设计分析<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#有源滤波器的设计分析" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="一一阶rc运放分析">（一）：一阶“RC+运放”分析<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#一一阶rc运放分析" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<blockquote>
+<p>接下来直接上<strong>干货</strong>，还是上面滤波电路，我们把它<strong>剖开分析</strong>：</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850868.jpg" alt/></p>
+<p>把它分成“第一部分”和“第二部分”。</p>
+<p><strong>第一部分</strong>：是一个标准的<strong>RC低通</strong>滤波器。</p>
+<p><strong>第二部分</strong>：是一个电压跟随器（无放大作用），起到<strong>隔离</strong>作用,并增强<strong>带负载能力</strong></p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850865.jpg" alt/></p>
+<p>针对第一部分的标准RC波器来说，它的截止频率公式是：，如下图所示。截止频率为10K赫兹</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850855.jpg" alt/></p>
+<p>再加上运算放大器的<strong>负反馈</strong>一部分。两者的输出曲线其实并没有太大的变化(从截止频率来看)</p>
+<blockquote>
+<p>那<strong>有源运放</strong>还有没有<strong>意义</strong>呢？我们接着看它的<strong>痛点问题</strong>！</p>
+</blockquote>
+<h3 id="痛点一滤波曲线不陡峭">痛点一：滤波曲线不陡峭！<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#痛点一滤波曲线不陡峭" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>十倍频程的频率变化，抑制仅下降了20dB，意味着即便在远端，可能也没有较好的滤波抑制效果，<strong>近端滤波效果更差</strong>。</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850865-1.jpg" alt/></p>
+<h3 id="痛点二负载调制问题">痛点二：负载调制问题！<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#痛点二负载调制问题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<blockquote>
+<p><strong>RC滤波器</strong>：后面<strong>接负载</strong>往往具有不确定性。如果是一个具有频响特性的器件(阻抗随频率变化)，它的阻抗可能会影响RC滤波器的滤波效果。</p>
+</blockquote>
+<p><strong>典型的可能</strong>：导致截止频率发生变化，甚至波形发生变化等。而加了运放之后，就有较好的隔离效果。这在工程应用中非常实用</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850887.jpg" alt/></p>
+<h3 id="其他痛点问题">其他痛点问题<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#其他痛点问题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<blockquote>
+<p><strong>具有增益效果</strong>：既然加了运放，当然可以设计成带有增益的输出结果。这样可使滤波器的<strong>差损得到补偿</strong></p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850869.jpg" alt/></p>
+<p><strong>总结：</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th><font style="color:#8A8F8D;">对比项</font></th><th><font style="color:#8A8F8D;">无源RC滤波</font></th><th><font style="color:#8A8F8D;">一阶有源RC</font></th></tr></thead><tbody><tr><td>滤波曲线</td><td>❌抑制曲线不陡峭（-20dB/十倍频程）</td><td>✅可级联实现高阶滤波，设计灵活</td></tr><tr><td>隔离效果</td><td>❌无隔离功能，可能受到后级的负载调制影响</td><td>✅运放高输入阻抗+低输出阻抗实现隔离；✅带载能力强</td></tr><tr><td>增益输出</td><td>❌无增益，信号只能衰减输出</td><td>✅可设计增益（1～1000倍），同时保持滤波特性</td></tr></tbody></table></div>
+<h3 id="二二阶rc运放分析">（二）：二阶“RC+运放”分析<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#二二阶rc运放分析" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<blockquote>
+<p>如果我们的输入端再接一组RC，变成两组RC。此时就变成了一个简单的<strong>二阶RC有源滤波器</strong>，如下图所示：</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850888.jpg" alt/></p>
+<p>为了方便我们的仿真和计算。我们将此处电阻取值统一为<strong>R=992</strong>，电容取值统一为<strong>C=16nF</strong>；此外，为了能保证该有源增益输出，我们设计了分压电阻2.12K和912Ω，理论计算增益的计算结果如下：</p>
+<p><strong>Gain=(1+912/2120)=1.43(倍)</strong></p>
+<blockquote>
+<p>（由于前面还有RC器件，增益会有些许偏差） 为了进一步做验证，我们用仿真软件<strong>搭建电路</strong>：</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850874.jpg" alt/></p>
+<blockquote>
+<p><strong>电路简介：可分为三部分.</strong><br/>
+(1)输入的二阶无源RC电路。 (2)增益可调节电阻；<br/>
+(3)运算放大器op27—双轨供电</p>
+</blockquote>
+<p><strong>输入前仿真结果：</strong></p>
+<p>先看输入前的一阶和二阶RC无源部分：</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850892.jpg" alt/></p>
+<blockquote>
+<p><strong>位置1</strong>和<strong>位置2</strong>分别是1阶和2阶的RC无源滤波仿真结果。我把曲线放到一起，可以明显看到二阶的无源滤波曲线更加陡峭，滤波效果更好。</p>
+</blockquote>
+<p><strong>整体仿真结果：</strong></p>
+<p>下图是输出点<strong>位置3</strong>对应的输出结果，输出有3dB的增益；并且它的输出曲线同样陡峭，证明抑制效果较好</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850861.jpg" alt/></p>
+<h2 id="经典有源滤波拓扑sallen-key和multifeed-back">经典有源滤波拓扑：Sallen Key和MultiFeed Back<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#经典有源滤波拓扑sallen-key和multifeed-back" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="sallen-key拓扑设计">Sallen-Key拓扑设计<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#sallen-key拓扑设计" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>如果我们进一步提高通带带宽，且保持滚降系数不便，该怎么办呢？</p>
+<blockquote>
+<p>Sallen-Key设计思路： <strong>《1》<strong><strong>如果要增强滤波效果，我们最先想到的是</strong></strong>引入并联电容</strong>。那么这个并联电容能不能是<strong>输入端的RC</strong>电容呢？ <strong>《2》</strong> 最好还要引入**<a href="https://zhida.zhihu.com/search?content_id=259706930&amp;content_type=Article&amp;match_order=1&amp;q=%E6%AD%A3%E5%8F%8D%E9%A6%88&amp;zhida_source=entity" class="external">正反馈<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>**，将截止频率附近处的幅度先拉高。然后在急剧下降，来提高它的抑制斜率(见下图)</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850889.jpg" alt/></p>
+<blockquote>
+<p>（<strong>注</strong>：负反馈加电容也能小范围提高抑制度，但效果不明显；另外，<strong>负反馈</strong>的电容更多用于<strong>调节相位裕度</strong>，来保证电路的<strong>稳定性</strong>）</p>
+</blockquote>
+<p>下面我将电路做如下<strong>变形</strong>：一阶RC的电容<strong>去除接地线</strong>，并在输出端引入一个反馈，接到这个电容(红虚线)。由于这根线是接到同向端，故这是一个<strong>正反馈</strong></p>
+<blockquote>
+<p>变形完后，就得到一个<strong>标准的Sallen-Key拓扑</strong>。此时，他的反馈路径如红色虚箭头所示。</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850877.jpg" alt/></p>
+<p><strong>极端分析法：</strong><br/>
+● 当f→0时直流，正反馈截止(电容断路)，此项相当于缓冲器(电压跟随器)<br/>
+● 当f→∞时直流，正反馈截止(电容断路) ➡️ 故存在某一个容值(f=fc时)，正反馈会起作用（此时担心<strong>正反馈的自激作用</strong>）</p>
+<p><strong>定性推导：</strong></p>
+<blockquote>
+<p>既然有<strong>自激风险</strong>，我们做一个定性推导，来判断<strong>自激条件</strong>是什么</p>
+</blockquote>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850882.jpg" alt/></p>
+<p>●<strong>通带增益得</strong>(<a href="https://zhida.zhihu.com/search?content_id=259706930&amp;content_type=Article&amp;match_order=1&amp;q=%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A2%9E%E7%9B%8A&amp;zhida_source=entity" class="external">负反馈增益<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a>)</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850880.jpg" alt/></p>
+<p>对上图列如下公式：<br/>
+●<strong>对U2在U1电的分压得</strong></p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850885.jpg" alt/></p>
+<p>（<strong>注</strong>：电容得S域阻抗为1/SC） ●<strong>对U1节点使用KCL得</strong></p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850862.jpg" alt/></p>
+<p>●<strong>联立上述三式可得</strong>（二阶传递函数）：</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850856.jpg" alt/></p>
+<p>由于S得最高次幂为2，故这是<strong>2阶</strong>Sallen-Key有源滤波</p>
+<blockquote>
+<p><strong>结论：由传递函数知，实际使用过程中要保证增益Au&lt;3dB，否则可能不稳定</strong></p>
+</blockquote>
+<p><strong>仿真结果：</strong></p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850886.jpg" alt/></p>
+<p><strong>由仿真结果可知</strong>：<br/>
+✱<strong>截止频率</strong>：带宽提高了(RC结构10Khz插损约为-8)。<br/>
+✱<strong>缺点</strong>：滤波曲线在高频上会有上翘</p>
+<blockquote>
+<p>Sallen-Key拓扑结构曲线高频上翘<strong>原因</strong>:实际的电容也是有带宽的，不可避免，需要通过其他手段,给他压下去（如后面并联<strong>高频率波电容</strong>，<strong>更换拓扑结构</strong>等）</p>
+</blockquote>
+<h3 id="multifeed-back拓扑设计">MultiFeed Back拓扑设计<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#multifeed-back拓扑设计" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>再次变换拓扑结构：MultiFeed　Back（以下简称MFB）如下图所示：</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850871.jpg" alt/></p>
+<blockquote>
+<p><strong>MFB拓扑变化</strong>：　　　　　　　●保持了一阶RC不变，将二阶RC的电容接入负反馈；　　　　　　　　　 ●增加一个电阻，也接入负反馈；　　　　　　　　　　　　●输入端接到了放大器的反向端，输出信号会是反向的效果</p>
+</blockquote>
+<p>由于同样也是二阶的滤波器，推导过程不赘述（直接看后文总结），直接看仿真结果：</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850891.jpg" alt/></p>
+<blockquote>
+<p>相同的器件搭建出来不同的拓扑结构，滤波的效果是不一样的。 MFB结构的<strong>高频上翘得到了明显改善</strong></p>
+</blockquote>
+<p>多提一句，MFB还能支持差分输出，将反向端的电路<strong>镜像</strong>到同向端即可，具体电路见下图：</p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850872.jpg" alt/></p>
+<h3 id="mfb和sallen-key拓扑总结">MFB和Sallen-Key拓扑总结<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#mfb和sallen-key拓扑总结" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><strong>⚔️****传递函数对比：</strong></p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850883.jpg" alt/></p>
+<p>为了更清楚他们的拓扑选型和应用场景。我们在此处将两个拓扑结构做<strong>详细对比</strong>，供大家参考</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>特性</th><th>Sallen-Key</th><th>MFB</th></tr></thead><tbody><tr><td>拓扑结构</td><td>电压控制电压源 (VCVS)</td><td>反相放大器结构</td></tr><tr><td>信号相位</td><td>输出同相</td><td>输出信号相位反转</td></tr><tr><td>设计难度</td><td>较低（电阻/电容比值小）</td><td>较高（需要精密元件匹配）</td></tr><tr><td>Q值</td><td>对元件值敏感，高Q实现困难</td><td>对元件变化较不敏感，易实现高Q</td></tr><tr><td>带外抑制</td><td>受限，高频曲线上翘</td><td>优秀（负反馈提供更好抑制）</td></tr><tr><td>适用拓扑</td><td>仅单端结构</td><td>支持单端和差分</td></tr><tr><td>运放要求</td><td>与运放带宽无关；可用CFB实现</td><td>需高增益带宽积运放（GBW）</td></tr><tr><td>典型应用</td><td>基础低通/高通滤波器</td><td>高精度带通/低通滤波器</td></tr><tr><td>结构差异</td><td>非积分器结构</td><td>基于积分器结构</td></tr><tr><td>实现成本</td><td>较低（元件数量少）</td><td>稍高（额外反馈元件）</td></tr></tbody></table></div>
+<h3 id="adi有源滤波设计工具">ADI有源滤波设计工具：<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#adi有源滤波设计工具" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>连接如下： <a href="https://link.zhihu.com/?target=https%3A//tools.analog.com/cn/filterwizard/" class="external">https://tools.analog.com/cn/filterwizard/<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></p>
+<p><img src="./0000assets/7、有源滤波器设计/file-20251224155850884.jpg" alt/></p>
+<p>ADI有源滤波工具</p>
+<blockquote>
+<p><strong>友情提示：<strong><strong>工具设计方便，我们也应该</strong></strong>在了解它原理的基础上去使用</strong>。这样节省的时间成本，才是有意义的。后续使用应用场景出问题，也方便溯源</p>
+</blockquote></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-48" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#滤波器分类" data-for="滤波器分类">滤波器分类</a></li><li class="depth-0"><a href="#三种滤波器对比" data-for="三种滤波器对比">三种“滤波器”对比</a></li><li class="depth-0"><a href="#有源滤波器的设计分析" data-for="有源滤波器的设计分析">“有源滤波器”的设计分析</a></li><li class="depth-1"><a href="#一一阶rc运放分析" data-for="一一阶rc运放分析">（一）：一阶“RC+运放”分析</a></li><li class="depth-1"><a href="#痛点一滤波曲线不陡峭" data-for="痛点一滤波曲线不陡峭">痛点一：滤波曲线不陡峭！</a></li><li class="depth-1"><a href="#痛点二负载调制问题" data-for="痛点二负载调制问题">痛点二：负载调制问题！</a></li><li class="depth-1"><a href="#其他痛点问题" data-for="其他痛点问题">其他痛点问题</a></li><li class="depth-1"><a href="#二二阶rc运放分析" data-for="二二阶rc运放分析">（二）：二阶“RC+运放”分析</a></li><li class="depth-0"><a href="#经典有源滤波拓扑sallen-key和multifeed-back" data-for="经典有源滤波拓扑sallen-key和multifeed-back">经典有源滤波拓扑：Sallen Key和MultiFeed Back</a></li><li class="depth-1"><a href="#sallen-key拓扑设计" data-for="sallen-key拓扑设计">Sallen-Key拓扑设计</a></li><li class="depth-1"><a href="#multifeed-back拓扑设计" data-for="multifeed-back拓扑设计">MultiFeed Back拓扑设计</a></li><li class="depth-1"><a href="#mfb和sallen-key拓扑总结" data-for="mfb和sallen-key拓扑总结">MFB和Sallen-Key拓扑总结</a></li><li class="depth-1"><a href="#adi有源滤波设计工具" data-for="adi有源滤波设计工具">ADI有源滤波设计工具：</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script type="application/javascript" data-persist="true">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module" data-persist="true">function E(a,e){if(!a)return;function t(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function n(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}a?.addEventListener("click",t),window.addCleanup(()=>a?.removeEventListener("click",t)),document.addEventListener("keydown",n),window.addCleanup(()=>document.removeEventListener("keydown",n))}function f(a){for(;a.firstChild;)a.removeChild(a.firstChild)}var m=class{constructor(e,t){this.container=e;this.content=t;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),t=this.onMouseMove.bind(this),n=this.onMouseUp.bind(this),o=this.onTouchStart.bind(this),r=this.onTouchMove.bind(this),i=this.onTouchEnd.bind(this),s=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",t),document.addEventListener("mouseup",n),this.container.addEventListener("touchstart",o,{passive:!1}),document.addEventListener("touchmove",r,{passive:!1}),document.addEventListener("touchend",i),window.addEventListener("resize",s),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",t),()=>document.removeEventListener("mouseup",n),()=>this.container.removeEventListener("touchstart",o),()=>document.removeEventListener("touchmove",r),()=>document.removeEventListener("touchend",i),()=>window.removeEventListener("resize",s))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let t=this.createButton("+",()=>this.zoom(.1)),n=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(n),e.appendChild(o),e.appendChild(t),this.container.appendChild(e)}createButton(e,t){let n=document.createElement("button");return n.textContent=e,n.className="mermaid-control-button",n.addEventListener("click",t),window.addCleanup(()=>n.removeEventListener("click",t)),n}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}onTouchStart(e){if(e.touches.length!==1)return;this.isDragging=!0;let t=e.touches[0];this.startPan={x:t.clientX-this.currentPan.x,y:t.clientY-this.currentPan.y}}onTouchMove(e){if(!this.isDragging||e.touches.length!==1)return;e.preventDefault();let t=e.touches[0];this.currentPan={x:t.clientX-this.startPan.x,y:t.clientY-this.startPan.y},this.updateTransform()}onTouchEnd(){this.isDragging=!1}zoom(e){let t=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),n=this.content.getBoundingClientRect(),o=n.width/2,r=n.height/2,i=t-this.scale;this.currentPan.x-=o*i,this.currentPan.y-=r*i,this.scale=t,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){let t=this.content.querySelector("svg").getBoundingClientRect(),n=t.width/this.scale,o=t.height/this.scale;this.scale=1,this.currentPan={x:(this.container.clientWidth-n)/2,y:(this.container.clientHeight-o)/2},this.updateTransform()}},T=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],y;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;y||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let t=y.default,n=new WeakMap;for(let r of e)n.set(r,r.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let c=n.get(s);c&&(s.innerHTML=c)}let r=T.reduce((s,c)=>(s[c]=window.getComputedStyle(document.documentElement).getPropertyValue(c),s),{}),i=document.documentElement.getAttribute("saved-theme")==="dark";t.initialize({startOnLoad:!1,securityLevel:"loose",theme:i?"dark":"base",themeVariables:{fontFamily:r["--codeFont"],primaryColor:r["--light"],primaryTextColor:r["--darkgray"],primaryBorderColor:r["--tertiary"],lineColor:r["--darkgray"],secondaryColor:r["--secondary"],tertiaryColor:r["--tertiary"],clusterBkg:r["--light"],edgeLabelBackground:r["--highlight"]}}),await t.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let r=0;r<e.length;r++){let v=function(){let g=l.querySelector("#mermaid-space"),h=l.querySelector(".mermaid-content");if(!h)return;f(h);let w=i.querySelector("svg").cloneNode(!0);h.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new m(g,h)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},i=e[r],s=i.parentElement,c=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(c),L=c.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),E(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script type="application/javascript" data-persist="true">
+        const socket = new WebSocket('ws://localhost:3001')
+        // reload(true) ensures resources like images and scripts are fetched again in firefox
+        socket.addEventListener('message', () => document.location.reload(true))
+      </script><script src="../../../postscript.js" type="module" data-persist="true"></script></html>

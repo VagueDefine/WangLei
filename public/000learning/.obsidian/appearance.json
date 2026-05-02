@@ -1,0 +1,14 @@
+{
+  "theme": "system",
+  "baseFontSize": 18,
+  "baseFontSizeAction": true,
+  "nativeMenus": false,
+  "accentColor": "",
+  "cssTheme": "Underwater",
+  "interfaceFontFamily": "",
+  "enabledCssSnippets": [
+    "auto-image-center",
+    "dataview-style"
+  ],
+  "textFontFamily": ""
+}

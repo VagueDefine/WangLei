@@ -1,3 +1,18 @@
+---
+title: "13、ADC有效精度计算"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: ADC有效位数ENOB计算，SINAD信纳比与量化噪声理论推导
+tags:
+  - ADC
+aliases:
+  - "ADC精度"
+  - "ENOB"
+  - "有效位数"
+  - "ADC Accuracy"
+draft: false
+---
 # ADC精度计算公式详解
 
 ## 1. 分辨率与有效位数

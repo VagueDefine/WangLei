@@ -1,3 +1,19 @@
+---
+title: "LDO  vs BUCK"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: LDO与BUCK电路的原理差异、应用场景对比与电源系统设计选型指南
+tags:
+  - 电源设计
+  - LDO
+  - 开关电源
+aliases:
+  - "LDO BUCK对比"
+  - "电源选型"
+  - "DCDC vs LDO"
+draft: false
+---
 [https://blog.csdn.net/qwaszx523/article/details/54601310](https://blog.csdn.net/qwaszx523/article/details/54601310)
 
 针对BUCK电路与LDO的应用场景和技术差异，结合电源设计需求，以下为系统性对比及选型指南：

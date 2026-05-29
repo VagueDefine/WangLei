@@ -1,3 +1,18 @@
+---
+title: "2、BOOST变换"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: BOOST升压变换器工作原理，输入电容作用分析与输入输出纹波计算
+tags:
+  - 电源设计
+  - 开关电源
+aliases:
+  - "BOOST"
+  - "Boost Converter"
+  - "升压变换器"
+draft: false
+---
 # BOOST变换
 
 ## 一、BOOST电路工作原理

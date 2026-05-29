@@ -1,3 +1,18 @@
+---
+title: "4、BUCK,BOOST参数计算"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: BUCK与BOOST电路中电感、电容、软启动电容等关键参数的计算方法
+tags:
+  - 电源设计
+  - 开关电源
+aliases:
+  - "BUCK BOOST计算"
+  - "DC-DC参数"
+  - "电感电容计算"
+draft: false
+---
 
 
 [电源大师12—BUCK降压电路 BOOST升压电路，电感电容参数计算，前馈电容Cff计算，负载瞬变产生的电压过冲。TPS55340 TPS54560_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1cr4y1m7Qi?spm_id_from=333.788.player.switch&vd_source=ba62f878ab81b77525d122fe32118844)

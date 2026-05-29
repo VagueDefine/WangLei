@@ -1,3 +1,18 @@
+---
+title: "4、达林顿管（Darlington Transistor）"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: 达林顿管的结构组成、电流放大原理、电气参数特性与实际应用场景
+tags:
+  - 元器件
+  - 电路基础
+aliases:
+  - "达林顿管"
+  - "Darlington"
+  - "复合管"
+draft: false
+---
 [达林顿管原理与应用-CSDN博客](https://blog.csdn.net/qlexcel/article/details/119297394)
 
 [（五）三极管为什么能够放大？电流流向到底是怎样的？_放大电路电流是怎么流的-CSDN博客](https://blog.csdn.net/qq_40945081/article/details/106844899)

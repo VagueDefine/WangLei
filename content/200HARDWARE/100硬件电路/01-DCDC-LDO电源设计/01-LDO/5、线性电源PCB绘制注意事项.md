@@ -1,3 +1,18 @@
+---
+title: "5、线性电源PCB绘制注意事项"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: 线性电源PCB布局要点，反馈采样路径选择与数字模拟分割设计
+tags:
+  - 电源设计
+  - LDO
+  - PCB设计
+aliases:
+  - "线性电源布局"
+  - "Linear PCB Layout"
+draft: false
+---
 ## 线性电源PCB绘制注意事项
 ![](0000assets/5、线性电源PCB绘制注意事项/file-20251224160302199.png)
 

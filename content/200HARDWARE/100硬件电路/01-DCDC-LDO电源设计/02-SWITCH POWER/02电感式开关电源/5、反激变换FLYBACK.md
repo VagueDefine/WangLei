@@ -1,3 +1,18 @@
+---
+title: "5、反激变换FLYBACK"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: 反激变换器的工作原理、变压器设计计算步骤与RCD吸收电路设计
+tags:
+  - 电源设计
+  - 开关电源
+aliases:
+  - "反激变换器"
+  - "Flyback"
+  - "反激电源"
+draft: false
+---
 # 反激变换FLYBACK
 
 <font style="color:rgb(0, 0, 0);">反激电源适用于</font>**<font style="color:rgb(0, 0, 0);">≤200W</font>**<font style="color:rgb(0, 0, 0);">的输出功率（家用电器、充电器等），更高功率（如300W以上）需优化磁芯和散热设计。</font>

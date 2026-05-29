@@ -1,3 +1,18 @@
+---
+title: "1、BUCK变换"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: BUCK降压变换器的工作原理、波形分析与电感电容参数计算
+tags:
+  - 电源设计
+  - 开关电源
+aliases:
+  - "BUCK"
+  - "Buck Converter"
+  - "降压变换器"
+draft: false
+---
 # BUCK变换
 
 ## 一、工作原理

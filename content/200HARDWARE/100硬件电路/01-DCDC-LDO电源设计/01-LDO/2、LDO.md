@@ -1,3 +1,17 @@
+---
+title: "2、LDO"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: LDO低压差线性稳压器的工作原理、优缺点分析、核心参数及与DC-DC的选型对比
+tags:
+  - 电源设计
+  - LDO
+aliases:
+  - "低压差线性稳压器"
+  - "LDO Regulator"
+draft: false
+---
 [电子电路学习笔记（14）——LDO(低压差线性稳压器)_ldo电路-CSDN博客](https://blog.csdn.net/qq_36347513/article/details/121019508)
 
 [LDO VS buck的优缺点对比：LDO（效率低但稳压）；DCDC（降压buck，效率高但噪声大）_buck和ldo电路的优缺点-CSDN博客](https://blog.csdn.net/ank1983/article/details/139884660)

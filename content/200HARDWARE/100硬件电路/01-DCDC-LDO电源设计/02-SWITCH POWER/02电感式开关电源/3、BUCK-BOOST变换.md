@@ -1,3 +1,19 @@
+---
+title: "3、BUCK-BOOST变换"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: BUCK-BOOST变换器与SEPIC电路的工作原理、公式推导及PCB绘制要点
+tags:
+  - 电源设计
+  - 开关电源
+aliases:
+  - "BUCK-BOOST"
+  - "Buck-Boost Converter"
+  - "SEPIC"
+  - "升降压"
+draft: false
+---
 # BUCK-BOOST变换
 
 ![](0000assets/3、BUCK-BOOST变换/file-20251224160158162.png)

@@ -1,3 +1,17 @@
+---
+title: "8、MOS管快速关断电路"
+source:
+author: WangLI
+created: "2026-05-29-星期五"
+description: ADC有效精度(ENOB)计算，SINAD与量化噪声理论公式推导
+tags:
+  - ADC
+aliases:
+  - "ADC精度"
+  - "ENOB"
+  - "有效位数"
+draft: false
+---
 # ADC精度计算公式详解
 
 ## 1. 分辨率与有效位数

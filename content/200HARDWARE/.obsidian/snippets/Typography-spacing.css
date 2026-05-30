@@ -1,0 +1,94 @@
+/* ============================================
+   Obsidian 排版优化 CSS 代码片段
+   文件名建议：typography-spacing.css
+   使用方法：放入 .obsidian/snippets/ 文件夹并在设置中启用
+   ============================================ */
+
+/* ---------- 阅读模式（Preview） ---------- */
+.markdown-preview-view {
+  /* 全局行高 */
+  line-height: 1.8;
+  
+  /* 段落间距 */
+  p {
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
+    /* 首行缩进（2字符），不需要可注释掉 */
+    text-indent: 0em;
+  }
+
+  /* 标题间距 */
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.2em;
+    margin-bottom: 0.6em;
+    /* 标题取消缩进 */
+    text-indent: 0;
+  }
+
+  /* 列表项间距 */
+  ul li, ol li {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    line-height: 1.7;
+  }
+
+  /* 引用块 */
+  blockquote {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 0.5em 1em;
+    line-height: 1.7;
+  }
+
+  /* 代码块 */
+  pre {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    line-height: 1.6;
+  }
+
+  /* 表格 */
+  table {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  /* 分割线 */
+  hr {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+}
+
+/* ---------- 编辑模式 / Live Preview ---------- */
+.markdown-source-view {
+  line-height: 1.8;
+}
+
+/* 编辑模式段落 */
+.cm-line {
+  line-height: 1.8 !important;
+  padding-top: 0.3em !important;
+  padding-bottom: 0.3em !important;
+}
+
+/* 编辑模式标题 */
+.cm-header {
+  line-height: 1.4 !important;
+  padding-top: 0.5em !important;
+  padding-bottom: 0.3em !important;
+}
+
+/* 编辑模式列表 */
+.cm-formatting-list {
+  line-height: 1.7;
+}
+
+/* ---------- 可选：移动端适配 ---------- */
+.is-mobile .markdown-preview-view {
+  line-height: 1.7;
+}
+
+.is-mobile .markdown-preview-view p {
+  text-indent: 2em;
+}

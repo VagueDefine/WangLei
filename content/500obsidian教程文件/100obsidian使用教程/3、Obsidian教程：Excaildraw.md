@@ -8,8 +8,7 @@ tags:
   - obsidian教程
 aliases:
   - 3、Obsidian教程：Excaildraw
-draft:
-  - "false"
+draft: false
 ---
 **建议用图片，或者再在根目录固定一个excalidraw文件**
 移动笔记时直接复制所有内容

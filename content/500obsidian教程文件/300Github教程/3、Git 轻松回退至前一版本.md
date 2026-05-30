@@ -9,8 +9,7 @@ tags:
 aliases:
   - 3、Git 回退至前一版本
   - 3、Git 轻松回退至前一版本
-draft:
-  - "false"
+draft: false
 ---
 
 # Git Reset 三种模式完全指南

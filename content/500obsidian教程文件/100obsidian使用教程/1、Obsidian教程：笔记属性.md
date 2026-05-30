@@ -10,8 +10,7 @@ tags:
 aliases:
   - 笔记属性
   - 1、Obsidian教程：笔记属性
-draft:
-  - "false"
+draft: false
 ---
 这一篇我们来聊聊 Obsidian 的 **笔记属性（Properties）** 。
 

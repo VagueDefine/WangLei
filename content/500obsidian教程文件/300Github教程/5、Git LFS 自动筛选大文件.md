@@ -8,8 +8,7 @@ tags:
   - GitHub教程
 aliases:
   - 5、Git LFS 自动筛选大文件
-draft:
-  - "false"
+draft: false
 ---
 
 # Git LFS 自动筛选大文件配置指南

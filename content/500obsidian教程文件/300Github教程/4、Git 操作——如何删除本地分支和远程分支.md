@@ -9,8 +9,7 @@ tags:
   - GitHub教程
 aliases:
   - 4、Git 操作——如何删除本地分支和远程分支
-draft:
-  - "false"
+draft: false
 ---
 ## 引言
 

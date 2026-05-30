@@ -9,8 +9,7 @@ aliases:
   - node运行本地网页
   - 2、Windows 部署 Obsidian 网页版（Docker 版）详细笔记
 description: "{{description}}"
-draft:
-  - "false"
+draft: false
 ---
 
 

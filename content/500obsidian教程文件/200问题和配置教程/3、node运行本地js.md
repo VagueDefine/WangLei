@@ -9,8 +9,7 @@ aliases:
   - node运行本地网页
   - 3、node运行本地js
 description: "{{description}}"
-draft:
-  - "false"
+draft: false
 ---
 
 

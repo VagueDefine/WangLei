@@ -8,8 +8,7 @@ tags:
   - obsidian教程
 aliases:
   - 4、Obsidian教程：Mind Map
-draft:
-  - "false"
+draft: false
 ---
 
 ## 🎯 核心功能

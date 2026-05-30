@@ -8,8 +8,7 @@ tags:
   - obsidian教程
 aliases:
   - 5、Obsidian教程：Custom Frames
-draft:
-  - "false"
+draft: false
 ---
  我来详细分析这个 Obsidian 插件。让我先获取仓库的完整信息。
 根据 GitHub 仓库信息，我为你详细分析这个 Obsidian 插件：

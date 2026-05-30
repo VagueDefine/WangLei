@@ -9,8 +9,7 @@ tags:
 aliases:
   - 解决 GitHub 文件大小限制
   - 1、解决 GitHub 文件大小限制
-draft:
-  - "false"
+draft: false
 ---
 
 

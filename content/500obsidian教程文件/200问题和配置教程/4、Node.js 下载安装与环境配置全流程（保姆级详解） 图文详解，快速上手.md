@@ -10,8 +10,7 @@ tags:
 aliases:
   - node.js配置
   - 4、Node.js 下载安装与环境配置全流程（保姆级详解） 图文详解，快速上手
-draft:
-  - "false"
+draft: false
 ---
 ## 前言
 

@@ -11,8 +11,7 @@ created: 2026-04-25-星期六
 description: 📖 本文档是 Quartz 4 部署的完整指南，包含安装、配置、主题切换、部署流程以及常见问题的解决方案。
 aliases:
   - 1、Quartz-Static-GitHub
-draft:
-  - "true"
+draft: false
 ---
 
 ## 目录
@@ -635,6 +634,8 @@ $$F_{clock} = 1/T_{clock}\tag{1}$$
 # 正确示例
 $$F_{clock} = 1/T_{clock}$$
 ```
+
+**方案三：**[行内和独立公式](100obsidian使用教程/6、Obsidian教程：行内和独立公式.md)
 
 **问题原因**：
 - `\tag{}` 是 LaTeX 的 AMS 数学包功能，用于给公式添加编号

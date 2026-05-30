@@ -7,10 +7,10 @@ article img {
 }
 
 // 公式居中 (MathJax display mode $$...$$)
-mjx-container.MathJax[display] {
+mjx-container[display="true"] {
   display: block !important;
+  margin: 1.5rem auto !important;
   text-align: center !important;
-  margin: 1rem auto !important;
 }
 
 // KaTeX display mode

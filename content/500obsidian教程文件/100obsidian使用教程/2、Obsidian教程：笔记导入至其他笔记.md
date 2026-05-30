@@ -8,8 +8,7 @@ tags:
   - obsidian教程
 aliases:
   - 2、Obsidian教程：笔记导入至其他笔记
-draft:
-  - "false"
+draft: false
 ---
 ## 导出笔记
 

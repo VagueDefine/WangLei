@@ -8,8 +8,7 @@ tags:
   - obsidian本地软件
 aliases:
   - 1、PanDoc问题
-draft:
-  - "false"
+draft: false
 ---
 
 

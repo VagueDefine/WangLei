@@ -1,8 +1,16 @@
 @use "../../styles/variables.scss" as *;
 
+/* ========== 侧边栏样式优化 - 修改标注 ========== */
+/* 主要改进：
+   1. 增大字体：文件夹标题 0.95rem → 1rem
+   2. 增加行高：1.5rem → 1.8，解决字体太紧问题
+   3. 增加项目间距：margin 和 padding
+   4. 添加悬停动画效果
+   5. 优化边框样式和颜色
+*/
+
 @media all and ($mobile) {
   .page > #quartz-body {
-    // Shift page position when toggling Explorer on mobile.
     & > :not(.sidebar.left:has(.explorer)) {
       transition: transform 300ms ease-in-out;
     }
@@ -12,7 +20,6 @@
       transition: transform 300ms ease-in-out;
     }
 
-    // Sticky top bar (stays in place when scrolling down on mobile).
     .sidebar.left:has(.explorer) {
       box-sizing: border-box;
       position: sticky;
@@ -31,13 +38,11 @@
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
-
   min-height: 1.2rem;
   flex: 0 1 auto;
 
   &.collapsed {
     flex: 0 1 1.2rem;
-
     & .fold {
       transform: rotateZ(-90deg);
     }
@@ -71,7 +76,6 @@
     button.mobile-explorer {
       display: flex;
     }
-
     button.desktop-explorer {
       display: none;
     }
@@ -86,7 +90,6 @@
   svg {
     pointer-events: all;
     transition: transform 0.35s ease;
-
     & > polyline {
       pointer-events: none;
     }
@@ -99,15 +102,17 @@ button.desktop-explorer {
   border: none;
   text-align: left;
   cursor: pointer;
-  padding: 0;
+  padding: 0.5rem 0; /* 【新增】增加内边距 */
   color: var(--dark);
   display: flex;
   align-items: center;
 
   & h2 {
-    font-size: 1rem;
+    font-size: 1.1rem; /* 【修改】1rem → 1.1rem 标题字号增大 */
     display: inline-block;
     margin: 0;
+    font-weight: $semiBoldWeight; /* 【新增】字重 */
+    letter-spacing: 0.02em; /* 【新增】字间距 */
   }
 }
 
@@ -115,7 +120,8 @@ button.desktop-explorer {
   list-style: none;
   overflow: hidden;
   overflow-y: auto;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem; /* 【修改】0.5rem → 0.75rem 上边距增大 */
+  padding: 0.5rem 0; /* 【新增】内边距 */
 
   & ul {
     list-style: none;
@@ -128,12 +134,24 @@ button.desktop-explorer {
 
     & li > a {
       color: var(--dark);
-      opacity: 0.75;
+      opacity: 0.8; /* 【修改】0.75 → 0.8 提高可读性 */
       pointer-events: all;
+      font-size: 0.95rem; /* 【保持】文件链接字号 */
+      line-height: 1.8; /* 【修改】1.5 → 1.8 行高增大，解决字体太紧 */
+      padding: 0.2rem 0; /* 【新增】上下内边距 */
+      display: block; /* 【新增】块级显示 */
+      transition: all 0.2s ease; /* 【新增】过渡动画 */
+
+      &:hover {
+        opacity: 1;
+        color: var(--secondary); /* 【新增】悬停颜色 */
+        transform: translateX(3px); /* 【新增】悬停右移效果 */
+      }
 
       &.active {
         opacity: 1;
         color: var(--tertiary);
+        font-weight: $semiBoldWeight; /* 【新增】当前页加粗 */
       }
     }
   }
@@ -154,9 +172,14 @@ button.desktop-explorer {
 
   .folder-outer > ul {
     overflow: hidden;
-    margin-left: 6px;
-    padding-left: 0.8rem;
-    border-left: 1px solid var(--lightgray);
+    margin-left: 8px; /* 【修改】6px → 8px */
+    padding-left: 1rem; /* 【修改】0.8rem → 1rem 缩进增大 */
+    border-left: 2px solid var(--lightgray); /* 【修改】1px → 2px 边框加粗 */
+    transition: border-color 0.2s ease; /* 【新增】边框过渡 */
+    
+    &:hover {
+      border-left-color: var(--secondary); /* 【新增】悬停边框变色 */
+    }
   }
 }
 
@@ -165,14 +188,23 @@ button.desktop-explorer {
   display: flex;
   align-items: center;
   user-select: none;
+  padding: 0.25rem 0; /* 【新增】内边距 */
+  margin: 0.15rem 0; /* 【新增】外边距 */
+  border-radius: 6px; /* 【新增】圆角 */
+  transition: background-color 0.2s ease; /* 【新增】背景过渡 */
+
+  &:hover {
+    background-color: var(--highlight); /* 【新增】悬停背景色 */
+  }
 
   & div > a {
     color: var(--secondary);
     font-family: var(--headerFont);
-    font-size: 0.95rem;
+    font-size: 1rem; /* 【修改】0.95rem → 1rem 文件夹标题字号增大 */
     font-weight: $semiBoldWeight;
-    line-height: 1.5rem;
+    line-height: 1.8; /* 【修改】1.5rem → 1.8 行高增大 */
     display: inline-block;
+    letter-spacing: 0.01em; /* 【新增】字间距 */
   }
 
   & div > a:hover {
@@ -192,22 +224,23 @@ button.desktop-explorer {
     font-family: var(--headerFont);
 
     & span {
-      font-size: 0.95rem;
+      font-size: 1rem; /* 【修改】0.95rem → 1rem 文件夹标题字号增大 */
       display: inline-block;
       color: var(--secondary);
       font-weight: $semiBoldWeight;
       margin: 0;
-      line-height: 1.5rem;
+      line-height: 1.8; /* 【修改】1.5rem → 1.8 行高增大 */
       pointer-events: none;
+      letter-spacing: 0.01em; /* 【新增】字间距 */
     }
   }
 }
 
 .folder-icon {
-  margin-right: 5px;
+  margin-right: 8px; /* 【修改】5px → 8px 图标右边距增大 */
   color: var(--secondary);
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, color 0.2s ease; /* 【修改】添加颜色过渡 */
   backface-visibility: visible;
   flex-shrink: 0;
 }
@@ -220,11 +253,19 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
   color: var(--tertiary);
 }
 
+/* 【新增】列表项间距 */
+.explorer-ul > li {
+  margin: 0.2rem 0;
+  
+  &:has(> .folder-container) {
+    margin: 0.3rem 0;
+  }
+}
+
 .explorer {
   @media all and ($mobile) {
     &.collapsed {
       flex: 0 0 34px;
-
       & > .explorer-content {
         transform: translateX(-100vw);
         visibility: hidden;
@@ -233,7 +274,6 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
 
     &:not(.collapsed) {
       flex: 0 0 34px;
-
       & > .explorer-content {
         transform: translateX(0);
         visibility: visible;
@@ -255,7 +295,7 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
         transform 200ms ease,
         visibility 200ms ease;
       overflow: hidden;
-      padding: 4rem 0 2rem 0;
+      padding: 4rem 1.5rem 2rem 1.5rem;
       height: 100dvh;
       max-height: 100dvh;
       visibility: hidden;
@@ -265,7 +305,6 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
       margin: 0;
       padding: 5px;
       z-index: 101;
-
       .lucide-menu {
         stroke: var(--darkgray);
       }

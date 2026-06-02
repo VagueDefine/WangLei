@@ -1,23 +1,45 @@
 @use "../../styles/variables.scss" as *;
 
+/* ========== 右侧反向链接(Backlinks)样式优化 - 修改标注 ========== */
+/* 主要改进：
+   1. 增大标题字号：1rem → 1.1rem
+   2. 增加行高：解决字体太紧问题
+   3. 增加项目间距
+   4. 添加悬停动画效果
+*/
+
 .backlinks {
   flex-direction: column;
 
   & > h3 {
-    font-size: 1rem;
+    font-size: 1.1rem; /* 【修改】1rem → 1.1rem 标题字号增大 */
     margin: 0;
+    padding: 0.5rem 0; /* 【新增】上下内边距 */
+    font-weight: $semiBoldWeight; /* 【新增】字重 */
+    letter-spacing: 0.02em; /* 【新增】字间距 */
   }
 
   & > ul.overflow {
     list-style: none;
     padding: 0;
-    margin: 0.5rem 0;
+    margin: 0.75rem 0; /* 【修改】0.5rem → 0.75rem 上边距增大 */
     max-height: calc(100% - 2rem);
     overscroll-behavior: contain;
 
     & > li {
+      margin: 0.3rem 0; /* 【新增】列表项间距 */
+      
       & > a {
         background-color: transparent;
+        font-size: 0.9rem; /* 【新增】字号 */
+        line-height: 1.7; /* 【新增】行高，解决字体太紧 */
+        display: block; /* 【新增】块级显示 */
+        padding: 0.2rem 0; /* 【新增】上下内边距 */
+        transition: all 0.2s ease; /* 【新增】过渡动画 */
+        
+        &:hover {
+          transform: translateX(3px); /* 【新增】悬停右移效果 */
+        }
       }
     }
   }

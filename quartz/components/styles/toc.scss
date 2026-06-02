@@ -1,5 +1,13 @@
 @use "../../styles/variables.scss" as *;
 
+/* ========== 右侧目录(TOC)样式优化 - 修改标注 ========== */
+/* 主要改进：
+   1. 增大标题字号：1rem → 1.1rem
+   2. 增加行高：解决字体太紧问题
+   3. 增加项目间距
+   4. 添加悬停动画效果
+*/
+
 .toc {
   display: flex;
   flex-direction: column;
@@ -16,15 +24,17 @@ button.toc-header {
   border: none;
   text-align: left;
   cursor: pointer;
-  padding: 0;
+  padding: 0.5rem 0; /* 【新增】增加内边距 */
   color: var(--dark);
   display: flex;
   align-items: center;
 
   & h3 {
-    font-size: 1rem;
+    font-size: 1.1rem; /* 【修改】1rem → 1.1rem 标题字号增大 */
     display: inline-block;
     margin: 0;
+    font-weight: $semiBoldWeight; /* 【新增】字重 */
+    letter-spacing: 0.02em; /* 【新增】字间距 */
   }
 
   & .fold {
@@ -41,26 +51,43 @@ button.toc-header {
 ul.toc-content.overflow {
   list-style: none;
   position: relative;
-  margin: 0.5rem 0;
+  margin: 0.75rem 0; /* 【修改】0.5rem → 0.75rem 上边距增大 */
   padding: 0;
   max-height: calc(100% - 2rem);
   overscroll-behavior: contain;
   list-style: none;
 
-  & > li > a {
-    color: var(--dark);
-    opacity: 0.35;
-    transition:
-      0.5s ease opacity,
-      0.3s ease color;
-    &.in-view {
-      opacity: 0.75;
+  & > li {
+    margin: 0.25rem 0; /* 【新增】列表项间距 */
+    
+    & > a {
+      color: var(--dark);
+      opacity: 0.5; /* 【修改】0.35 → 0.5 提高可读性 */
+      font-size: 0.9rem; /* 【新增】字号 */
+      line-height: 1.7; /* 【新增】行高，解决字体太紧 */
+      display: block; /* 【新增】块级显示 */
+      padding: 0.15rem 0; /* 【新增】上下内边距 */
+      transition:
+        0.2s ease opacity,
+        0.2s ease color,
+        0.2s ease transform; /* 【修改】添加transform过渡 */
+      
+      &:hover {
+        opacity: 0.85;
+        transform: translateX(3px); /* 【新增】悬停右移效果 */
+      }
+      
+      &.in-view {
+        opacity: 0.85; /* 【修改】0.75 → 0.85 当前项更明显 */
+        color: var(--secondary); /* 【新增】当前项颜色 */
+        font-weight: $semiBoldWeight; /* 【新增】当前项加粗 */
+      }
     }
   }
 
   @for $i from 0 through 6 {
     & .depth-#{$i} {
-      padding-left: calc(1rem * #{$i});
+      padding-left: calc(1.2rem * #{$i}); /* 【修改】1rem → 1.2rem 缩进增大 */
     }
   }
 }

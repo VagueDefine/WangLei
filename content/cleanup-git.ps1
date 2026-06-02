@@ -62,6 +62,7 @@ Get-ChildItem -Path . -Recurse -Directory -Filter "Excalidraw" -Force | Remove-I
 
 Get-ChildItem -Path . -Recurse -File -Filter ".gitignore" -Force | Remove-Item -Force -ErrorAction SilentlyContinue
 Get-ChildItem -Path . -Recurse -File -Filter ".gitattributes" -Force | Remove-Item -Force -ErrorAction SilentlyContinue
+Get-ChildItem -Path . -Recurse -File -Filter "delete-trash.ps1" -Force | Remove-Item -Force -ErrorAction SilentlyContinue
 
 Write-Host "Cleanup done!"
 

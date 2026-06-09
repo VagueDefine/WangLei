@@ -1,0 +1,8 @@
+![](100%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF/04-%E6%95%B0%E5%AD%97%E7%94%B5%E6%BA%90%E8%AE%BE%E8%AE%A1/0000assets/2%E3%80%81PWM%E5%81%9ADAC%E6%95%B0%E6%8E%A7%E7%94%B5%E6%BA%90/cee4daf101a2765c5177e521bff3e67d_MD5.png)
+
+[PWM可以做DAC吗 - 新唐MCU官方技术支持论坛](https://bbs.21ic.com/icview-2574344-1-1.htm)
+
+还可以后面接运放或者电压跟随器实行进一步放大。对运放本身没有要求。因为输入PWM已经被滤为直流信号了。
+
+![](100%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF/04-%E6%95%B0%E5%AD%97%E7%94%B5%E6%BA%90%E8%AE%BE%E8%AE%A1/0000assets/2%E3%80%81PWM%E5%81%9ADAC%E6%95%B0%E6%8E%A7%E7%94%B5%E6%BA%90/e9b4a6ddcf755b3d1c28e3d10aceca65_MD5.png)
+

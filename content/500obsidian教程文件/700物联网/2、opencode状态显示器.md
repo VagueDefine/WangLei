@@ -22,7 +22,8 @@ draft: false
 
 将 opencode 的工作状态实时显示在 ESP32 的 OLED 屏幕和 LED 上。
 
-> **ESP32 IP**: 192.168.49.232:8080  
+> **ESP32 地址**: opencode-light.local (mDNS)  
+> **备用 IP**: 192.168.49.232:8080  
 > **WiFi**: C202 / xiaoaojianghu  
 > **opencode 版本**: 1.16.2
 
@@ -84,14 +85,16 @@ C:\Users\16344\.config\opencode\
 
 插件自动加载，无需在 `opencode.json` 中配置。
 
+> ⚠️ 必须确保 `~/.config/opencode/package.json` 包含 `"type": "module"`，否则 Node.js 会把 `.js` 当作 CommonJS 解析，插件中的 `import` 语法会导致 opencode 启动崩溃。
+
 ### 完整代码
 
 ```javascript
 import net from "net"
 
 export const ESP32StatusPlugin = async () => {
-  const HOST = "192.168.49.232"
-  const PORT = 8080
+  const HOST = process.env.ESP32_HOST || "opencode-light.local"
+  const PORT = parseInt(process.env.ESP32_PORT || "8080")
   let lastState = ""
   let lastSent = Date.now()
   let sock = null
@@ -165,6 +168,8 @@ export const ESP32StatusPlugin = async () => {
 - 必须使用**命名导出** `export const SomeName = async (ctx) => { ... }`
 - 插件函数返回 **Hooks 对象**，可注册 `tool`、`event`、`auth` 等钩子
 - 依赖 npm 包需要在 `~/.config/opencode/package.json` 中声明
+- **⚠️ 必须**：`package.json` 需包含 `"type": "module"`，否则 `.js` 文件中 `import` 语法会导致 opencode 崩溃
+- **⚠️ 不能改 `.mjs`**：opencode 插件扫描器只识别 `.js` 后缀，`plugins/` 下的 `.mjs` 不会被加载
 
 ---
 
@@ -596,10 +601,10 @@ opencode 会话开始
 
 ## 🐛 踩坑记录
 
-### 1. opencode 启动卡死
-- **现象**：把普通 `.js` 文件扔进 `plugins/` 目录，opencode 启动时卡在加载页面
-- **原因**：插件文件必须遵循 opencode 插件 API（导出 `export const Xxx = async (ctx) => { ... }`）
-- **解决**：重写为标准插件格式，使用命名导出和 Hooks 对象
+### 1. opencode 启动卡死（package.json 缺 type: module）
+- **现象**：更新 opencode 后，`esp32-status.js` 导致 opencode 启动崩溃
+- **原因**：插件用 `import net from "net"`（ESM 语法），但 `~/.config/opencode/package.json` 缺少 `"type": "module"`，Node.js 把 `.js` 当作 CommonJS 解析 → `import` 报错 → opencode 崩溃。新版本 opencode 收紧了模块加载规则
+- **解决**：在 `package.json` 加 `"type": "module"`，`.js` 文件保持不动。注意：**不能改成 `.mjs`**，因为 opencode 插件扫描器只识别 `.js` 后缀
 
 ### 2. session.status 找不到状态数据
 - **现象**：`event.data?.status` 始终为空
@@ -672,6 +677,242 @@ opencode 会话开始
 ### 其他显示设备
 - 替换 OLED 为 ILI9341 TFT 彩屏（SPI 接口）
 - 显示更多信息：当前模型、响应耗时、Token 用量
+
+---
+
+---
+
+## ⬆️ v2 HTTP 版本（2026-06-18）
+
+v1 使用 `net.Socket()` TCP 长连接，但 **Bun 1.3.14 Windows 版** 的 `net` 模块触发 **Segmentation fault**，opencode 启动即崩溃。
+
+v2 改用 **`fetch()` HTTP 通信**，彻底规避此问题。
+
+| 对比 | v1 (TCP) | v2 (HTTP) |
+|------|----------|-----------|
+| 通信 | `net.Socket()` 长连接 | `fetch()` HTTP GET |
+| 心跳 | 每 10s ping | 不需要 |
+| 连接 | 自动重连 + 保活 | 每次请求独立短连接 |
+| 插件行数 | 58 行 | 32 行 |
+| Bun 兼容性 | ❌ Windows segfault | ✅ 稳定 |
+
+### 修改内容
+
+**插件** → `~/.config/opencode/plugins/esp32-status.js`
+
+```javascript
+export const ESP32StatusPlugin = async () => {
+  const HOST = process.env.ESP32_HOST || "opencode-light.local"
+  const PORT = process.env.ESP32_PORT || "8080"
+  const BASE = `http://${HOST}:${PORT}`
+  let lastState = ""
+  let lastSent = 0
+
+  const send = async (state) => {
+    if (state === lastState && Date.now() - lastSent < 200) return
+    lastState = state
+    lastSent = Date.now()
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const res = await fetch(`${BASE}/set?state=${state}`, { signal: AbortSignal.timeout(1000) })
+        if (res.ok) return
+      } catch {
+        if (attempt < 2) await new Promise(r => setTimeout(r, 500))
+      }
+    }
+  }
+
+  return {
+    "tool.execute.before": async () => { await send("busy") },
+    "tool.execute.after": async () => { await send("thinking") },
+    event: async ({ event }) => {
+      if (event.type === "session.idle" || event.type === "session.done") {
+        await send("off")
+      }
+      if (event.type === "session.status") {
+        const t = event.properties?.status?.type
+        if (t === "busy" && (lastState === "off" || lastState === "")) await send("busy")
+        else if (t === "idle") await send("off")
+        else if (t === "error") await send("error")
+        else if (t === "stopped") await send("off")
+      }
+    },
+  }
+}
+```
+
+**ESP32 固件** → `src/main.cpp`
+
+```cpp
+#include <Arduino.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+#define LED_pin 2
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+#include <WiFi.h>
+#include <ESPmDNS.h>
+#include <WebServer.h>
+
+const char* WIFI_SSID = "C202";
+const char* WIFI_PASSWORD = "xiaoaojianghu";
+const uint16_t HTTP_PORT = 8080;
+WebServer server(HTTP_PORT);
+
+String currentState = "off";
+char stateText[16] = "Ready";
+unsigned long lastAnimMs = 0;
+int frame = 0;
+bool blinkOn = true;
+int ledBrightness = 0;
+int ledStep = 2;
+unsigned long lastLedMs = 0;
+
+void setStateText(const String &s) {
+  if (s == "thinking") strcpy(stateText, "Think");
+  else if (s == "busy") strcpy(stateText, "Busy");
+  else if (s == "success") strcpy(stateText, "Done");
+  else if (s == "error") strcpy(stateText, "Error!");
+  else if (s == "alarm") strcpy(stateText, "Alert!");
+  else strcpy(stateText, "Ready");
+}
+
+void updateAnim() {
+  unsigned long now = millis();
+  int rate = (currentState == "thinking") ? 250 :
+             (currentState == "busy") ? 100 :
+             (currentState == "error") ? 200 : 500;
+  if (now - lastAnimMs < rate) return;
+  lastAnimMs = now;
+  frame++;
+  blinkOn = (frame % 2 == 0);
+}
+
+void drawDisplay() {
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(28, 2); display.print("OpenCode");
+  display.drawFastHLine(4, 14, 120, SSD1306_WHITE);
+
+  int cx = 64, cy = 28;
+
+  if (currentState == "thinking") {
+    for (int i = 0; i < 3; i++) {
+      int r = (i == frame % 3) ? 6 : 3;
+      display.fillCircle(cx - 16 + i * 16, cy, r, SSD1306_WHITE);
+    }
+  } else if (currentState == "busy") {
+    display.drawRect(cx - 20, cy - 4, 40, 8, SSD1306_WHITE);
+    int fw = ((frame % 20) + 1) * 38 / 20;
+    display.fillRect(cx - 19, cy - 3, fw, 6, SSD1306_WHITE);
+  } else if (currentState == "success") {
+    display.fillCircle(cx, cy, 14, SSD1306_WHITE);
+    display.fillCircle(cx, cy, 10, SSD1306_BLACK);
+    display.drawLine(cx - 6, cy, cx - 2, cy + 5, SSD1306_WHITE);
+    display.drawLine(cx - 2, cy + 5, cx + 6, cy - 5, SSD1306_WHITE);
+  } else if (currentState == "error") {
+    if (blinkOn) {
+      display.fillCircle(cx, cy, 14, SSD1306_WHITE);
+      display.fillCircle(cx, cy, 10, SSD1306_BLACK);
+      display.drawLine(cx - 6, cy - 6, cx + 6, cy + 6, SSD1306_WHITE);
+      display.drawLine(cx + 6, cy - 6, cx - 6, cy + 6, SSD1306_WHITE);
+    }
+  } else if (currentState == "alarm") {
+    if (blinkOn) {
+      display.fillTriangle(cx, cy - 12, cx - 12, cy + 8, cx + 12, cy + 8, SSD1306_WHITE);
+      display.fillRect(cx - 3, cy + 2, 6, 6, SSD1306_BLACK);
+      display.fillRect(cx - 2, cy - 5, 4, 5, SSD1306_WHITE);
+      display.fillRect(cx - 2, cy + 2, 4, 1, SSD1306_WHITE);
+    }
+  } else {
+    display.drawCircle(cx, cy, 8, SSD1306_WHITE);
+  }
+
+  int textLen = strlen(stateText);
+  int textW = textLen * 12;
+  display.setTextSize(2);
+  display.setCursor((128 - textW) / 2, 48);
+  display.print(stateText);
+  display.display();
+}
+
+void updateLED() {
+  unsigned long now = millis();
+  if (now - lastLedMs < 15) return;
+  lastLedMs = now;
+  if (currentState == "off") {
+    analogWrite(LED_pin, (now / 500) % 2 == 0 ? 255 : 0);
+  } else if (currentState == "busy" || currentState == "thinking") {
+    ledBrightness += ledStep;
+    if (ledBrightness >= 255 || ledBrightness <= 0) ledStep = -ledStep;
+    analogWrite(LED_pin, ledBrightness);
+  } else if (currentState == "error") {
+    analogWrite(LED_pin, (now / 200) % 2 == 0 ? 255 : 0);
+  } else {
+    analogWrite(LED_pin, 0);
+  }
+}
+
+void handleSet() {
+  if (server.hasArg("state")) {
+    String s = server.arg("state");
+    s.toLowerCase();
+    if (s == "thinking" || s == "busy" || s == "success" || s == "error" || s == "alarm" || s == "off") {
+      currentState = s;
+      setStateText(s);
+      server.send(200, "text/plain", "ok " + currentState);
+      return;
+    }
+  }
+  server.send(400, "text/plain", "bad state");
+}
+
+void setup() {
+  pinMode(LED_pin, OUTPUT);
+  Serial.begin(115200); delay(300);
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { Serial.println("OLED not found"); for (;;); }
+  display.clearDisplay();
+  display.setTextSize(1); display.setTextColor(SSD1306_WHITE);
+  display.setCursor(32, 24); display.print("OpenCode");
+  display.setCursor(24, 40); display.print("Connecting...");
+  display.display();
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  while (WiFi.status() != WL_CONNECTED) { delay(300); Serial.print("."); }
+  Serial.print("\nIP: "); Serial.println(WiFi.localIP());
+  if (MDNS.begin("opencode-light")) {
+    Serial.println("mDNS: opencode-light.local");
+    MDNS.addService("http", "tcp", HTTP_PORT);
+  }
+  server.on("/set", handleSet);
+  server.begin();
+  Serial.println("HTTP server on port " + String(HTTP_PORT));
+  currentState = "off"; setStateText("ready"); drawDisplay();
+}
+
+void loop() {
+  server.handleClient();
+  updateAnim(); drawDisplay(); updateLED();
+  delay(5);
+}
+```
+
+| v2 关键改动 | 说明 |
+|---|---|
+| `WebServer` 替代 `WiFiServer` | 自动解析 HTTP，不需要手写文本协议 |
+| `server.on("/set", handleSet)` | URL 路由，状态参数自动识别 |
+| `MDNS.begin("opencode-light")` | mDNS 发现，IP 变了不用改配置 |
+| `fetch()` 替代 `net.Socket()` | 无长连接，无心跳，Bun 稳定 |
+| 浏览器直接测试 | 打开 `http://opencode-light.local:8080/set?state=busy` 即可 |
+
+**v2 新坑**：ESP32 需要重新烧录固件（从 TCP 服务器改为 HTTP 服务器），旧固件不认识 HTTP 请求。
 
 ---
 
